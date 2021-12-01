@@ -1,6 +1,6 @@
 class TaskModel {
-  final String title;
-  final String description;
+  String title;
+  String description;
 
   TaskModel(this.title, this.description);
 }

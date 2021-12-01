@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:todo/data/dummyData.dart';
+
 import 'package:todo/models/taskmodel.dart';
 
+// ignore: must_be_immutable
 class AddTaskBox extends StatefulWidget {
+  Function(TaskModel) getaddedvalues;
+  AddTaskBox({required this.getaddedvalues});
+
   @override
   _AddTaskBoxState createState() => _AddTaskBoxState();
 }
 
 class _AddTaskBoxState extends State<AddTaskBox> {
-  String title = "";
-  String desc = "";
+  TaskModel obj = new TaskModel("", "");
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -17,7 +20,8 @@ class _AddTaskBoxState extends State<AddTaskBox> {
       actions: [
         TextButton(
             onPressed: () {
-              data.add(TaskModel(title, desc));
+              widget.getaddedvalues(obj);
+
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),
                   content: Text("task added successfully")));
@@ -33,13 +37,13 @@ class _AddTaskBoxState extends State<AddTaskBox> {
             TextField(
               decoration: InputDecoration(hintText: "title"),
               onChanged: (val) {
-                title = val;
+                obj.title = val;
               },
             ),
             TextField(
               decoration: InputDecoration(hintText: "description"),
               onChanged: (val) {
-                desc = val;
+                obj.description = val;
               },
             ),
           ],

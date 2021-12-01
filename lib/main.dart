@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'models/taskmodel.dart';
 import 'widget/addTaskbox.dart';
 import 'data/dummyData.dart';
 
@@ -30,7 +31,14 @@ class _MyHomePageState extends State<MyHomePage> {
     void addTask() {
       showDialog(
         context: context,
-        builder: (context) => Container(child: AddTaskBox()),
+        builder: (context) => Container(child: AddTaskBox(
+          getaddedvalues: (a) {
+            setState(() {
+              TaskModel obj = new TaskModel(a.title, a.description);
+              data.add(obj);
+            });
+          },
+        )),
       );
     }
 
@@ -42,15 +50,15 @@ class _MyHomePageState extends State<MyHomePage> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           Expanded(
-              child: ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (ctx, i) => Text(data[i].title))
+            child:
+                //  ListView.builder(
+                //     itemCount: data.length,
+                //     itemBuilder: (ctx, i) => Text(data[i].title))
 
-              //  ListView(
-              //   children: data.map((e) => Text(e.title)).toList(),
-              // ),
-
-              ),
+                ListView(
+              children: data.map((e) => Text(e.title)).toList(),
+            ),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
