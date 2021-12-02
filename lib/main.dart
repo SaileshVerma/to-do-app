@@ -45,28 +45,41 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("To-Do"),
+        backgroundColor: Colors.blueAccent[200],
+        title: Text(
+          "To-Do",
+          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: GridView.builder(
-                  itemCount: data.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 11,
-                    mainAxisSpacing: 11,
-                  ),
-                  itemBuilder: (ctx, i) =>
-                      TaskGrid(data[i].title, data[i].description)),
-            ),
-          ],
+      body: Container(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: GridView.builder(
+                    itemCount: data.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 11,
+                      mainAxisSpacing: 11,
+                    ),
+                    itemBuilder: (ctx, i) => TaskGrid(
+                        getDeletedTitle: (val) {
+                          setState(() {
+                            data.removeWhere((e) => e.title == val);
+                          });
+                        },
+                        title: data[i].title,
+                        desc: data[i].description)),
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blueAccent[200],
         onPressed: () => addTask(),
         tooltip: 'Add new note',
         child: Icon(Icons.add),

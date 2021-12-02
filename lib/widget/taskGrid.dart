@@ -5,9 +5,11 @@ import 'package:todo/taskDetailScreen.dart';
 
 // ignore: must_be_immutable
 class TaskGrid extends StatefulWidget {
+  Function(String) getDeletedTitle;
   late String title;
   late String desc;
-  TaskGrid(this.title, this.desc);
+  TaskGrid(
+      {required this.title, required this.desc, required this.getDeletedTitle});
 
   @override
   _TaskGridState createState() => _TaskGridState();
@@ -22,7 +24,11 @@ class _TaskGridState extends State<TaskGrid> {
               TaskDetailScreen(title: widget.title, desc: widget.desc))),
       child: Container(
         decoration: BoxDecoration(
-            color: Colors.lightBlue, borderRadius: BorderRadius.circular(10)),
+            gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Colors.blue, Colors.blueGrey]),
+            borderRadius: BorderRadius.circular(10)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -40,7 +46,7 @@ class _TaskGridState extends State<TaskGrid> {
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 widget.desc.length > 30
-                    ? hidetext(widget.desc) + "....."
+                    ? hidetext(widget.desc) + "........"
                     : widget.desc,
                 style: TextStyle(color: Colors.white, fontSize: 13),
               ),
@@ -53,9 +59,10 @@ class _TaskGridState extends State<TaskGrid> {
               children: [
                 IconButton(
                     onPressed: () {
-                      setState(() {
-                        deleteItem(widget.title);
-                      });
+                      widget.getDeletedTitle(widget.title);
+                      Scaffold.of(context).showSnackBar(SnackBar(
+                          duration: Duration(seconds: 1),
+                          content: Text("Item deleted Successfully")));
                     },
                     icon: Icon(
                       Icons.delete,

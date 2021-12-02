@@ -9,6 +9,7 @@ class TaskDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blueAccent[200],
         title: Text(title),
       ),
       body: Padding(
