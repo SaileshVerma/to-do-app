@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/widget/taskGrid.dart';
 
 import 'models/taskmodel.dart';
 import 'widget/addTaskbox.dart';
@@ -32,9 +33,9 @@ class _MyHomePageState extends State<MyHomePage> {
       showDialog(
         context: context,
         builder: (context) => Container(child: AddTaskBox(
-          getaddedvalues: (a) {
+          getaddedvalues: (i) {
             setState(() {
-              TaskModel obj = new TaskModel(a.title, a.description);
+              TaskModel obj = new TaskModel(i.title, i.description);
               data.add(obj);
             });
           },
@@ -46,20 +47,24 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("To-Do"),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Expanded(
-            child:
-                //  ListView.builder(
-                //     itemCount: data.length,
-                //     itemBuilder: (ctx, i) => Text(data[i].title))
-
-                ListView(
-              children: data.map((e) => Text(e.title)).toList(),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: GridView.builder(
+                  itemCount: data.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 11,
+                    mainAxisSpacing: 11,
+                  ),
+                  itemBuilder: (ctx, i) =>
+                      TaskGrid(data[i].title, data[i].description)),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => addTask(),
