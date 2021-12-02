@@ -41,6 +41,9 @@ class _AddTaskBoxState extends State<AddTaskBox> {
               },
             ),
             TextField(
+              keyboardType: TextInputType.multiline,
+              minLines: 1,
+              maxLines: 6,
               decoration: InputDecoration(hintText: "description"),
               onChanged: (val) {
                 obj.description = val;

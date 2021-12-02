@@ -11,9 +11,12 @@ class TaskDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Container(
+      body: Padding(
+        padding: const EdgeInsets.all(5.0),
         child: Center(
-          child: Text(desc),
+          child: Container(
+            child: Text(desc),
+          ),
         ),
       ),
     );
