@@ -1,21 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:todo/data/dummyData.dart';
+import 'package:todo/models/taskmodel.dart';
 
-import 'package:todo/taskDetailScreen.dart';
+import 'package:todo/screens/taskDetailScreen.dart';
+
+import 'editTaskbox.dart';
 
 // ignore: must_be_immutable
 class TaskGrid extends StatefulWidget {
   Function(String) getDeletedTitle;
+  Function(TaskModel) getEditedTask;
   late String title;
   late String desc;
   TaskGrid(
-      {required this.title, required this.desc, required this.getDeletedTitle});
+      {required this.title,
+      required this.desc,
+      required this.getDeletedTitle,
+      required this.getEditedTask});
 
   @override
   _TaskGridState createState() => _TaskGridState();
 }
 
 class _TaskGridState extends State<TaskGrid> {
+  TaskModel obj = new TaskModel("", "");
+  void editTask() {
+    showDialog(
+      context: context,
+      builder: (context) => Container(
+          child: EditTaskBox(
+        receviedTitle: widget.title,
+        receviedDesc: widget.desc,
+        getEditedvalues: (i) {
+          setState(() {
+            obj.description = i.description;
+            obj.title = i.title;
+            widget.getEditedTask(obj);
+          });
+        },
+      )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -69,7 +94,10 @@ class _TaskGridState extends State<TaskGrid> {
                       color: Colors.white,
                     )),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      //widget.getEditedTask(obj);
+                      editTask();
+                    },
                     icon: Icon(
                       Icons.edit,
                       color: Colors.white,
@@ -90,8 +118,4 @@ String hidetext(String msg) {
     temp = temp + msg[i];
   }
   return temp;
-}
-
-void deleteItem(String title) {
-  data.removeWhere((element) => element.title == title);
 }

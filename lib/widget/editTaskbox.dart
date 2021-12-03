@@ -3,21 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:todo/models/taskmodel.dart';
 
 // ignore: must_be_immutable
-class AddTaskBox extends StatefulWidget {
-  Function(TaskModel) getaddedvalues;
-  AddTaskBox({required this.getaddedvalues});
+class EditTaskBox extends StatefulWidget {
+  Function(TaskModel) getEditedvalues;
 
+  late String receviedTitle, receviedDesc;
+  EditTaskBox(
+      {required this.getEditedvalues,
+      required this.receviedTitle,
+      required this.receviedDesc});
   @override
-  _AddTaskBoxState createState() => _AddTaskBoxState();
+  _EditTaskBoxState createState() => _EditTaskBoxState();
 }
 
-class _AddTaskBoxState extends State<AddTaskBox> {
+class _EditTaskBoxState extends State<EditTaskBox> {
   TaskModel obj = new TaskModel("", "");
-  late TextEditingController con;
-  //  void initState() {
-  //   super.initState();
-  // con   = new TextEditingController(text: 'Initial value');
-  // }
+
+  late TextEditingController descController, titleController;
+  @override
+  void initState() {
+    titleController = TextEditingController(text: widget.receviedTitle);
+    descController = TextEditingController(text: widget.receviedDesc);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,11 +33,11 @@ class _AddTaskBoxState extends State<AddTaskBox> {
       actions: [
         TextButton(
             onPressed: () {
-              widget.getaddedvalues(obj);
+              widget.getEditedvalues(obj);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),
-                  content: Text("task added successfully")));
+                  content: Text("task edited successfully")));
               Navigator.pop(context);
             },
             child: Text("OK"))
@@ -41,22 +48,21 @@ class _AddTaskBoxState extends State<AddTaskBox> {
         child: Column(
           children: [
             TextField(
-              //controller: con,
-
+              readOnly: true,
+              controller: titleController,
               decoration: InputDecoration(
                 hintText: "title",
               ),
-              onChanged: (val) {
-                obj.title = val;
-              },
             ),
             TextField(
+              controller: descController,
               keyboardType: TextInputType.multiline,
               minLines: 1,
               maxLines: 6,
               decoration: InputDecoration(hintText: "description"),
-              onChanged: (val) {
-                obj.description = val;
+              onChanged: (_) {
+                obj.description = descController.text;
+                obj.title = titleController.text;
               },
             ),
           ],
