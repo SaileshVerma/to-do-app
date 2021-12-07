@@ -90,7 +90,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 activeData: data
                     .where((element) => element.isActive == false)
                     .toList()),
-            CompletedTaskList()
+            CompletedTaskList(
+                getId: (value) {
+                  setState(() {
+                    data[data.indexWhere((element) => element.id == value.id)]
+                        .isActive = value.isActive;
+                    print(value.isActive);
+                  });
+                },
+                getDeletedTitle: (val) {
+                  setState(() {
+                    data.removeWhere((e) => e.title == val);
+                  });
+                },
+                getEditedTask: (v) {
+                  if (v.title.isNotEmpty) {
+                    setState(() {
+                      data[data.indexWhere((e) => e.title == v.title)]
+                          .description = v.description;
+                    });
+                  }
+                },
+                completeList:
+                    data.where((element) => element.isActive == true).toList())
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -107,45 +129,59 @@ class _MyHomePageState extends State<MyHomePage> {
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: GridView.builder(
-                  itemCount: data.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 11,
-                    mainAxisSpacing: 11,
+        child: data.isEmpty
+            ? Center(
+                child: Container(
+                  child: Text(
+                    "Lets Do Something",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.grey[500],
+                        fontWeight: FontWeight.bold),
                   ),
-                  itemBuilder: (ctx, i) => TaskGrid(
-                      getId: (value) {
-                        setState(() {
-                          data[data.indexWhere(
-                                  (element) => element.id == value.id)]
-                              .isActive = value.isActive;
-                        });
-                      },
-                      getDeletedTitle: (val) {
-                        setState(() {
-                          data.removeWhere((e) => e.title == val);
-                        });
-                      },
-                      getEditedTask: (v) {
-                        if (v.title.isNotEmpty) {
-                          setState(() {
-                            data[data.indexWhere((e) => e.title == v.title)]
-                                .description = v.description;
-                          });
-                        }
-                      },
-                      id: data[i].id,
-                      isAcitve: data[i].isActive,
-                      title: data[i].title,
-                      desc: data[i].description)),
-            ),
-          ],
-        ),
+                ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    child: GridView.builder(
+                        itemCount: data.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 11,
+                          mainAxisSpacing: 11,
+                        ),
+                        itemBuilder: (ctx, i) => TaskGrid(
+                            getId: (value) {
+                              setState(() {
+                                data[data.indexWhere(
+                                        (element) => element.id == value.id)]
+                                    .isActive = value.isActive;
+                              });
+                            },
+                            getDeletedTitle: (val) {
+                              setState(() {
+                                data.removeWhere((e) => e.title == val);
+                              });
+                            },
+                            getEditedTask: (v) {
+                              if (v.title.isNotEmpty) {
+                                setState(() {
+                                  data[data.indexWhere(
+                                          (e) => e.title == v.title)]
+                                      .description = v.description;
+                                });
+                              }
+                            },
+                            id: data[i].id,
+                            isAcitve: data[i].isActive,
+                            title: data[i].title,
+                            desc: data[i].description)),
+                  ),
+                ],
+              ),
       ),
     );
   }

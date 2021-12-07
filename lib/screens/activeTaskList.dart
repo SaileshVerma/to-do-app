@@ -24,51 +24,65 @@ class _ActiveTaskListState extends State<ActiveTaskList> {
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Expanded(
-              child: GridView.builder(
-                  itemCount: widget.activeData.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 11,
-                    mainAxisSpacing: 11,
+        child: widget.activeData.isEmpty
+            ? Center(
+                child: Container(
+                  child: Text(
+                    "No Active Task!!!!",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 30,
+                        color: Colors.grey[500],
+                        fontWeight: FontWeight.bold),
                   ),
-                  itemBuilder: (ctx, i) => TaskGrid(
-                      getId: (value) {
-                        setState(() {
-                          widget
-                              .activeData[widget.activeData.indexWhere(
-                                  (element) => element.id == value.id)]
-                              .isActive = value.isActive;
-                          widget.getId(value);
-                        });
-                      },
-                      getDeletedTitle: (val) {
-                        setState(() {
-                          widget.activeData.removeWhere((e) => e.title == val);
-                          widget.getDeletedTitle(val);
-                        });
-                      },
-                      getEditedTask: (v) {
-                        if (v.title.isNotEmpty) {
-                          setState(() {
-                            widget
-                                .activeData[widget.activeData
-                                    .indexWhere((e) => e.title == v.title)]
-                                .description = v.description;
-                            widget.getEditedTask(v);
-                          });
-                        }
-                      },
-                      id: widget.activeData[i].id,
-                      isAcitve: widget.activeData[i].isActive,
-                      title: widget.activeData[i].title,
-                      desc: widget.activeData[i].description)),
-            ),
-          ],
-        ),
+                ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Expanded(
+                    child: GridView.builder(
+                        itemCount: widget.activeData.length,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 11,
+                          mainAxisSpacing: 11,
+                        ),
+                        itemBuilder: (ctx, i) => TaskGrid(
+                            getId: (value) {
+                              setState(() {
+                                widget
+                                    .activeData[widget.activeData.indexWhere(
+                                        (element) => element.id == value.id)]
+                                    .isActive = value.isActive;
+                                widget.getId(value);
+                              });
+                            },
+                            getDeletedTitle: (val) {
+                              setState(() {
+                                widget.activeData
+                                    .removeWhere((e) => e.title == val);
+                                widget.getDeletedTitle(val);
+                              });
+                            },
+                            getEditedTask: (v) {
+                              if (v.title.isNotEmpty) {
+                                setState(() {
+                                  widget
+                                      .activeData[widget.activeData.indexWhere(
+                                          (e) => e.title == v.title)]
+                                      .description = v.description;
+                                  widget.getEditedTask(v);
+                                });
+                              }
+                            },
+                            id: widget.activeData[i].id,
+                            isAcitve: widget.activeData[i].isActive,
+                            title: widget.activeData[i].title,
+                            desc: widget.activeData[i].description)),
+                  ),
+                ],
+              ),
       ),
     );
   }

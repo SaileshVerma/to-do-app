@@ -12,7 +12,7 @@ class AddTaskBox extends StatefulWidget {
 }
 
 class _AddTaskBoxState extends State<AddTaskBox> {
-  TaskModel obj = new TaskModel(true, (DateTime.now()).toString(), "", "");
+  TaskModel obj = new TaskModel(false, (DateTime.now()).toString(), "", "");
   late TextEditingController con;
   //  void initState() {
   //   super.initState();
