@@ -7,13 +7,19 @@ import 'editTaskbox.dart';
 
 // ignore: must_be_immutable
 class TaskGrid extends StatefulWidget {
+  Function(TaskModel) getId;
   Function(String) getDeletedTitle;
   Function(TaskModel) getEditedTask;
+  late String id;
+  late bool isAcitve;
   late String title;
   late String desc;
   TaskGrid(
-      {required this.title,
+      {required this.getId,
+      required this.title,
       required this.desc,
+      required this.id,
+      required this.isAcitve,
       required this.getDeletedTitle,
       required this.getEditedTask});
 
@@ -22,7 +28,16 @@ class TaskGrid extends StatefulWidget {
 }
 
 class _TaskGridState extends State<TaskGrid> {
-  TaskModel obj = new TaskModel("", "");
+  TaskModel obj = TaskModel(true, (DateTime.now()).toString(), "", "");
+  @override
+  void initState() {
+    obj.id = widget.id;
+    obj.isActive = widget.isAcitve;
+    obj.title = widget.title;
+    obj.description = widget.desc;
+    super.initState();
+  }
+
   void editTask() {
     showDialog(
       context: context,
@@ -70,7 +85,7 @@ class _TaskGridState extends State<TaskGrid> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                widget.desc.length > 30
+                widget.desc.length > 35
                     ? hidetext(widget.desc) + "........"
                     : widget.desc,
                 style: TextStyle(color: Colors.white, fontSize: 13),
@@ -82,6 +97,18 @@ class _TaskGridState extends State<TaskGrid> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
+                Checkbox(
+                    checkColor: Colors.blue,
+                    activeColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5)),
+                    value: obj.isActive,
+                    onChanged: (val) {
+                      setState(() {
+                        obj.isActive = val!;
+                      });
+                      widget.getId(obj);
+                    }),
                 IconButton(
                     onPressed: () {
                       widget.getDeletedTitle(widget.title);
@@ -95,7 +122,7 @@ class _TaskGridState extends State<TaskGrid> {
                     )),
                 IconButton(
                     onPressed: () {
-                      //widget.getEditedTask(obj);
+                      widget.getEditedTask(obj);
                       editTask();
                     },
                     icon: Icon(
@@ -114,7 +141,7 @@ class _TaskGridState extends State<TaskGrid> {
 // function to hide extra text in the grid
 String hidetext(String msg) {
   String temp = "";
-  for (int i = 0; i < 30; i++) {
+  for (int i = 0; i < 35; i++) {
     temp = temp + msg[i];
   }
   return temp;

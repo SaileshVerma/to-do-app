@@ -1,6 +1,7 @@
 class TaskModel {
   String title;
   String description;
-
-  TaskModel(this.title, this.description);
+  String id;
+  bool isActive;
+  TaskModel(this.isActive, this.id, this.title, this.description);
 }

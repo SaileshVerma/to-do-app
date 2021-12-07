@@ -16,7 +16,7 @@ class EditTaskBox extends StatefulWidget {
 }
 
 class _EditTaskBoxState extends State<EditTaskBox> {
-  TaskModel obj = new TaskModel("", "");
+  TaskModel obj = new TaskModel(true, (DateTime.now()).toString(), "", "");
 
   late TextEditingController descController, titleController;
   @override
