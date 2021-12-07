@@ -67,7 +67,10 @@ class _TaskGridState extends State<TaskGrid> {
             gradient: LinearGradient(
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
-                colors: [Colors.blue, Colors.blueGrey]),
+                colors: [
+                  widget.isAcitve ? Colors.grey : Colors.blue,
+                  Colors.blueGrey
+                ]),
             borderRadius: BorderRadius.circular(10)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -78,6 +81,9 @@ class _TaskGridState extends State<TaskGrid> {
             Text(
               widget.title,
               style: TextStyle(
+                  decoration: widget.isAcitve
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 18),
@@ -88,7 +94,12 @@ class _TaskGridState extends State<TaskGrid> {
                 widget.desc.length > 35
                     ? hidetext(widget.desc) + "........"
                     : widget.desc,
-                style: TextStyle(color: Colors.white, fontSize: 13),
+                style: TextStyle(
+                    decoration: widget.isAcitve
+                        ? TextDecoration.lineThrough
+                        : TextDecoration.none,
+                    color: Colors.white,
+                    fontSize: 13),
               ),
             ),
             SizedBox(
