@@ -14,10 +14,6 @@ class AddTaskBox extends StatefulWidget {
 class _AddTaskBoxState extends State<AddTaskBox> {
   TaskModel obj = new TaskModel(false, (DateTime.now()).toString(), "", "");
   late TextEditingController con;
-  //  void initState() {
-  //   super.initState();
-  // con   = new TextEditingController(text: 'Initial value');
-  // }
 
   @override
   Widget build(BuildContext context) {

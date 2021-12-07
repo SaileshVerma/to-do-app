@@ -109,7 +109,7 @@ class _TaskGridState extends State<TaskGrid> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Checkbox(
-                    checkColor: Colors.blue,
+                    checkColor: Colors.grey,
                     activeColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
@@ -120,6 +120,9 @@ class _TaskGridState extends State<TaskGrid> {
                       });
                       widget.getId(obj);
                     }),
+                SizedBox(
+                  width: 22,
+                ),
                 IconButton(
                     onPressed: () {
                       widget.getDeletedTitle(widget.title);

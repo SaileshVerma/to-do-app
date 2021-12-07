@@ -13,7 +13,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<TaskModel> data = [
-    TaskModel(false, "1", "Meeting", "attend a meeting at 3 PM today "),
+    TaskModel(false, "1", "Meeting",
+        "attend a meeting at 3 PM today tend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PM"),
     TaskModel(false, "2", "Assignment",
         "complete all the pending assignment of lab practical"),
     TaskModel(false, "3", "Maths Assignment",
@@ -43,17 +44,35 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          elevation: 0,
           bottom: TabBar(
+            indicatorWeight: 1,
+            labelColor: Colors.blueAccent[200],
+            unselectedLabelColor: Colors.white70,
+            indicator: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+              color: Colors.white,
+            ),
             indicatorColor: Colors.white,
             tabs: [
               Tab(
-                child: Text("All"),
+                child: Text(
+                  "ALL",
+                  style: TextStyle(fontSize: 15),
+                ),
               ),
               Tab(
-                child: Text("Active"),
+                child: Text(
+                  "ACTIVE",
+                  style: TextStyle(fontSize: 15),
+                ),
               ),
               Tab(
-                child: Text("Completed"),
+                child: Text(
+                  "COMPLETED",
+                  style: TextStyle(fontSize: 15),
+                ),
               ),
             ],
           ),

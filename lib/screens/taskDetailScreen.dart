@@ -10,13 +10,26 @@ class TaskDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent[200],
-        title: Text(title),
+        title: Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          ),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(5.0),
+        padding: const EdgeInsets.all(8.0),
         child: Center(
           child: Container(
-            child: Text(desc),
+            child: Text(
+              desc,
+              textAlign: TextAlign.justify,
+              style: TextStyle(
+                color: Colors.grey[600],
+                fontSize: 20,
+              ),
+            ),
           ),
         ),
       ),
