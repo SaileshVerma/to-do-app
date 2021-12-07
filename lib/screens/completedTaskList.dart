@@ -31,7 +31,7 @@ class _CompletedTaskListState extends State<CompletedTaskList> {
                     "No Task Completed Yet Hurry Up!!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 22,
                         color: Colors.grey[500],
                         fontWeight: FontWeight.bold),
                   ),

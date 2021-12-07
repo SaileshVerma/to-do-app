@@ -86,7 +86,7 @@ class _TaskGridState extends State<TaskGrid> {
                       : TextDecoration.none,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 18),
+                  fontSize: 16),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -99,7 +99,7 @@ class _TaskGridState extends State<TaskGrid> {
                         ? TextDecoration.lineThrough
                         : TextDecoration.none,
                     color: Colors.white,
-                    fontSize: 13),
+                    fontSize: 12),
               ),
             ),
             SizedBox(

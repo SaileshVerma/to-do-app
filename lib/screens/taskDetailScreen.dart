@@ -27,7 +27,7 @@ class TaskDetailScreen extends StatelessWidget {
               textAlign: TextAlign.justify,
               style: TextStyle(
                 color: Colors.grey[600],
-                fontSize: 20,
+                fontSize: 16,
               ),
             ),
           ),

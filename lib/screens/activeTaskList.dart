@@ -31,7 +31,7 @@ class _ActiveTaskListState extends State<ActiveTaskList> {
                     "No Active Task!!!!",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 22,
                         color: Colors.grey[500],
                         fontWeight: FontWeight.bold),
                   ),

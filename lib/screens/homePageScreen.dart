@@ -155,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     "Lets Do Something",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                        fontSize: 30,
+                        fontSize: 22,
                         color: Colors.grey[500],
                         fontWeight: FontWeight.bold),
                   ),
