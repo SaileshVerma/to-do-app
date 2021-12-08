@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/models/subtaskmodel.dart';
 import 'package:todo/models/taskmodel.dart';
 
 import 'package:todo/screens/taskDetailScreen.dart';
@@ -10,31 +11,37 @@ class TaskGrid extends StatefulWidget {
   Function(TaskModel) getId;
   Function(String) getDeletedTitle;
   Function(TaskModel) getEditedTask;
+  //Function(SubTaskModel) getAddedSubTask;
   late String id;
   late bool isAcitve;
   late String title;
   late String desc;
-  TaskGrid(
-      {required this.getId,
-      required this.title,
-      required this.desc,
-      required this.id,
-      required this.isAcitve,
-      required this.getDeletedTitle,
-      required this.getEditedTask});
+  late List<SubTaskModel> subTaskData;
+  TaskGrid({
+    required this.getId,
+    required this.title,
+    required this.desc,
+    required this.id,
+    required this.isAcitve,
+    required this.subTaskData,
+    required this.getDeletedTitle,
+    required this.getEditedTask,
+    // required this.getAddedSubTask,
+  });
 
   @override
   _TaskGridState createState() => _TaskGridState();
 }
 
 class _TaskGridState extends State<TaskGrid> {
-  TaskModel obj = TaskModel(true, (DateTime.now()).toString(), "", "");
+  TaskModel obj = TaskModel(true, (DateTime.now()).toString(), "", "", []);
   @override
   void initState() {
     obj.id = widget.id;
     obj.isActive = widget.isAcitve;
     obj.title = widget.title;
     obj.description = widget.desc;
+
     super.initState();
   }
 
@@ -43,6 +50,9 @@ class _TaskGridState extends State<TaskGrid> {
       context: context,
       builder: (context) => Container(
           child: EditTaskBox(
+        receivedId: widget.id,
+        datalist: widget.subTaskData,
+        isActive: widget.isAcitve,
         receviedTitle: widget.title,
         receviedDesc: widget.desc,
         getEditedvalues: (i) {
@@ -60,8 +70,16 @@ class _TaskGridState extends State<TaskGrid> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (ctx) =>
-              TaskDetailScreen(title: widget.title, desc: widget.desc))),
+          // navigating to task's subtask screen
+          builder: (ctx) => TaskDetailScreen(
+              // getAddedSubTaskvalue: (val) {
+              //   setState(() {
+              //     widget.getAddedSubTask(val);
+              //   });
+              // },
+              subTaskData: widget.subTaskData,
+              title: widget.title,
+              desc: widget.desc))),
       child: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(

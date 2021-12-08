@@ -49,39 +49,46 @@ class _CompletedTaskListState extends State<CompletedTaskList> {
                           mainAxisSpacing: 11,
                         ),
                         itemBuilder: (ctx, i) => TaskGrid(
-                            getId: (value) {
-                              setState(() {
-                                widget
-                                    .completeList[widget.completeList
-                                        .indexWhere((element) =>
-                                            element.id == value.id)]
-                                    .isActive = value.isActive;
-                                widget.getId(value);
-                              });
-                            },
-                            getDeletedTitle: (val) {
-                              setState(() {
-                                widget.completeList
-                                    .removeWhere((e) => e.title == val);
-                                widget.getDeletedTitle(val);
-                              });
-                            },
-                            getEditedTask: (v) {
-                              if (v.title.isNotEmpty) {
+                              // getAddedSubTask: (val) {
+                              //   setState(() {
+                              //     widget.completeList[i].subTaskData.add(val);
+                              //   });
+                              // },
+                              getId: (value) {
                                 setState(() {
                                   widget
                                       .completeList[widget.completeList
-                                          .indexWhere(
-                                              (e) => e.title == v.title)]
-                                      .description = v.description;
-                                  widget.getEditedTask(v);
+                                          .indexWhere((element) =>
+                                              element.id == value.id)]
+                                      .isActive = value.isActive;
+                                  widget.getId(value);
                                 });
-                              }
-                            },
-                            id: widget.completeList[i].id,
-                            isAcitve: widget.completeList[i].isActive,
-                            title: widget.completeList[i].title,
-                            desc: widget.completeList[i].description)),
+                              },
+                              getDeletedTitle: (val) {
+                                setState(() {
+                                  widget.completeList
+                                      .removeWhere((e) => e.title == val);
+                                  widget.getDeletedTitle(val);
+                                });
+                              },
+                              getEditedTask: (v) {
+                                if (v.title.isNotEmpty) {
+                                  setState(() {
+                                    widget
+                                        .completeList[widget.completeList
+                                            .indexWhere(
+                                                (e) => e.title == v.title)]
+                                        .description = v.description;
+                                    widget.getEditedTask(v);
+                                  });
+                                }
+                              },
+                              id: widget.completeList[i].id,
+                              isAcitve: widget.completeList[i].isActive,
+                              title: widget.completeList[i].title,
+                              desc: widget.completeList[i].description,
+                              subTaskData: widget.completeList[i].subTaskData,
+                            )),
                   ),
                 ],
               ),

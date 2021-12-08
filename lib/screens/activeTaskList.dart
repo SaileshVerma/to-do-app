@@ -49,37 +49,45 @@ class _ActiveTaskListState extends State<ActiveTaskList> {
                           mainAxisSpacing: 11,
                         ),
                         itemBuilder: (ctx, i) => TaskGrid(
-                            getId: (value) {
-                              setState(() {
-                                widget
-                                    .activeData[widget.activeData.indexWhere(
-                                        (element) => element.id == value.id)]
-                                    .isActive = value.isActive;
-                                widget.getId(value);
-                              });
-                            },
-                            getDeletedTitle: (val) {
-                              setState(() {
-                                widget.activeData
-                                    .removeWhere((e) => e.title == val);
-                                widget.getDeletedTitle(val);
-                              });
-                            },
-                            getEditedTask: (v) {
-                              if (v.title.isNotEmpty) {
+                              // getAddedSubTask: (val) {
+                              //   setState(() {
+                              //     widget.activeData[i].subTaskData.add(val);
+                              //   });
+                              // },
+                              getId: (value) {
                                 setState(() {
                                   widget
                                       .activeData[widget.activeData.indexWhere(
-                                          (e) => e.title == v.title)]
-                                      .description = v.description;
-                                  widget.getEditedTask(v);
+                                          (element) => element.id == value.id)]
+                                      .isActive = value.isActive;
+                                  widget.getId(value);
                                 });
-                              }
-                            },
-                            id: widget.activeData[i].id,
-                            isAcitve: widget.activeData[i].isActive,
-                            title: widget.activeData[i].title,
-                            desc: widget.activeData[i].description)),
+                              },
+                              getDeletedTitle: (val) {
+                                setState(() {
+                                  widget.activeData
+                                      .removeWhere((e) => e.title == val);
+                                  widget.getDeletedTitle(val);
+                                });
+                              },
+                              getEditedTask: (v) {
+                                if (v.title.isNotEmpty) {
+                                  setState(() {
+                                    widget
+                                        .activeData[widget.activeData
+                                            .indexWhere(
+                                                (e) => e.title == v.title)]
+                                        .description = v.description;
+                                    widget.getEditedTask(v);
+                                  });
+                                }
+                              },
+                              id: widget.activeData[i].id,
+                              isAcitve: widget.activeData[i].isActive,
+                              title: widget.activeData[i].title,
+                              desc: widget.activeData[i].description,
+                              subTaskData: widget.activeData[i].subTaskData,
+                            )),
                   ),
                 ],
               ),

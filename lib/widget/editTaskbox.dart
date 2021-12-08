@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/models/subtaskmodel.dart';
 
 import 'package:todo/models/taskmodel.dart';
 
@@ -6,9 +7,15 @@ import 'package:todo/models/taskmodel.dart';
 class EditTaskBox extends StatefulWidget {
   Function(TaskModel) getEditedvalues;
 
-  late String receviedTitle, receviedDesc;
+  late String receviedTitle, receviedDesc, receivedId;
+  late bool isActive;
+  late List<SubTaskModel> datalist;
+
   EditTaskBox(
       {required this.getEditedvalues,
+      required this.datalist,
+      required this.isActive,
+      required this.receivedId,
       required this.receviedTitle,
       required this.receviedDesc});
   @override
@@ -16,11 +23,15 @@ class EditTaskBox extends StatefulWidget {
 }
 
 class _EditTaskBoxState extends State<EditTaskBox> {
-  TaskModel obj = new TaskModel(true, (DateTime.now()).toString(), "", "");
+  TaskModel obj = new TaskModel(true, (DateTime.now()).toString(), "", "", []);
 
   late TextEditingController descController, titleController;
   @override
   void initState() {
+    obj.id = widget.receivedId;
+    obj.isActive = widget.isActive;
+    obj.subTaskData = widget.datalist;
+
     titleController = TextEditingController(text: widget.receviedTitle);
     descController = TextEditingController(text: widget.receviedDesc);
     super.initState();

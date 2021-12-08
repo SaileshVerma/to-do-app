@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo/models/subtaskmodel.dart';
 import 'package:todo/screens/activeTaskList.dart';
 import 'package:todo/screens/completedTaskList.dart';
 import 'package:todo/widget/addTaskbox.dart';
@@ -14,13 +15,19 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<TaskModel> data = [
     TaskModel(false, "1", "Meeting",
-        "attend a meeting at 3 PM today tend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PMtend a meeting at 3 PM"),
+        "attend a meeting at 3 PM todayMtend a meeting at 3 PM", [
+      SubTaskModel("1", "title", false),
+      SubTaskModel("2", "title", false),
+      SubTaskModel("3", "title", false),
+      SubTaskModel("4", "title", false),
+      SubTaskModel("5", "title", false),
+    ]),
     TaskModel(false, "2", "Assignment",
-        "complete all the pending assignment of lab practical"),
+        "complete all the pending assignment of lab practical", []),
     TaskModel(false, "3", "Maths Assignment",
-        "submit the maths assignemnt to your teacher"),
+        "submit the maths assignemnt to your teacher", []),
     TaskModel(false, "4", "Call ur friend",
-        "tell ur friend about the work assign by the teacher"),
+        "tell ur friend about the work assign by the teacher", []),
   ];
 
   @override
@@ -31,8 +38,8 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (context) => Container(child: AddTaskBox(
           getaddedvalues: (i) {
             setState(() {
-              TaskModel obj =
-                  new TaskModel(i.isActive, i.id, i.title, i.description);
+              TaskModel obj = new TaskModel(
+                  i.isActive, i.id, i.title, i.description, i.subTaskData);
               data.add(obj);
             });
           },
@@ -173,31 +180,38 @@ class _MyHomePageState extends State<MyHomePage> {
                           mainAxisSpacing: 11,
                         ),
                         itemBuilder: (ctx, i) => TaskGrid(
-                            getId: (value) {
-                              setState(() {
-                                data[data.indexWhere(
-                                        (element) => element.id == value.id)]
-                                    .isActive = value.isActive;
-                              });
-                            },
-                            getDeletedTitle: (val) {
-                              setState(() {
-                                data.removeWhere((e) => e.title == val);
-                              });
-                            },
-                            getEditedTask: (v) {
-                              if (v.title.isNotEmpty) {
+                              // getAddedSubTask: (val) {
+                              //   setState(() {
+                              //     data[i].subTaskData.add(val);
+                              //   });
+                              // },
+                              getId: (value) {
                                 setState(() {
                                   data[data.indexWhere(
-                                          (e) => e.title == v.title)]
-                                      .description = v.description;
+                                          (element) => element.id == value.id)]
+                                      .isActive = value.isActive;
                                 });
-                              }
-                            },
-                            id: data[i].id,
-                            isAcitve: data[i].isActive,
-                            title: data[i].title,
-                            desc: data[i].description)),
+                              },
+                              getDeletedTitle: (val) {
+                                setState(() {
+                                  data.removeWhere((e) => e.title == val);
+                                });
+                              },
+                              getEditedTask: (v) {
+                                if (v.title.isNotEmpty) {
+                                  setState(() {
+                                    data[data.indexWhere(
+                                            (e) => e.title == v.title)]
+                                        .description = v.description;
+                                  });
+                                }
+                              },
+                              id: data[i].id,
+                              isAcitve: data[i].isActive,
+                              title: data[i].title,
+                              desc: data[i].description,
+                              subTaskData: data[i].subTaskData,
+                            )),
                   ),
                 ],
               ),

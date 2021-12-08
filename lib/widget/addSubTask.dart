@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-
-import 'package:todo/models/taskmodel.dart';
+import 'package:todo/models/subtaskmodel.dart';
 
 // ignore: must_be_immutable
-class AddTaskBox extends StatefulWidget {
-  Function(TaskModel) getaddedvalues;
-  AddTaskBox({required this.getaddedvalues});
+class AddSubTask extends StatefulWidget {
+  Function(SubTaskModel) getaddedsubtask;
+  AddSubTask({required this.getaddedsubtask});
 
   @override
-  _AddTaskBoxState createState() => _AddTaskBoxState();
+  _AddSubTaskState createState() => _AddSubTaskState();
 }
 
-class _AddTaskBoxState extends State<AddTaskBox> {
-  TaskModel obj = new TaskModel(false, (DateTime.now()).toString(), "", "", []);
-  late TextEditingController con;
-
+class _AddSubTaskState extends State<AddSubTask> {
+  SubTaskModel obj = SubTaskModel(DateTime.now().toString(), "", false);
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -22,7 +19,7 @@ class _AddTaskBoxState extends State<AddTaskBox> {
       actions: [
         TextButton(
             onPressed: () {
-              widget.getaddedvalues(obj);
+              widget.getaddedsubtask(obj);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),
@@ -33,7 +30,7 @@ class _AddTaskBoxState extends State<AddTaskBox> {
       ],
       title: Text("Lets Add Today Work : )"),
       content: Container(
-        height: 200,
+        height: 100,
         child: Column(
           children: [
             TextField(
@@ -44,15 +41,6 @@ class _AddTaskBoxState extends State<AddTaskBox> {
               ),
               onChanged: (val) {
                 obj.title = val;
-              },
-            ),
-            TextField(
-              keyboardType: TextInputType.multiline,
-              minLines: 1,
-              maxLines: 6,
-              decoration: InputDecoration(hintText: "description"),
-              onChanged: (val) {
-                obj.description = val;
               },
             ),
           ],
