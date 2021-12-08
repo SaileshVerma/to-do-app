@@ -16,11 +16,11 @@ class _MyHomePageState extends State<MyHomePage> {
   List<TaskModel> data = [
     TaskModel(false, "1", "Meeting",
         "attend a meeting at 3 PM todayMtend a meeting at 3 PM", [
-      SubTaskModel("1", "title", false),
-      SubTaskModel("2", "title", false),
-      SubTaskModel("3", "title", false),
-      SubTaskModel("4", "title", false),
-      SubTaskModel("5", "title", false),
+      SubTaskModel("1", "meeting 1", false),
+      SubTaskModel("2", "meeting 2", false),
+      SubTaskModel("3", "meeting 3", false),
+      SubTaskModel("4", "meeting 4", false),
+      SubTaskModel("5", "meeting 5", false),
     ]),
     TaskModel(false, "2", "Assignment",
         "complete all the pending assignment of lab practical", []),
@@ -29,6 +29,8 @@ class _MyHomePageState extends State<MyHomePage> {
     TaskModel(false, "4", "Call ur friend",
         "tell ur friend about the work assign by the teacher", []),
   ];
+
+  //
 
   @override
   Widget build(BuildContext context) {

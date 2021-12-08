@@ -65,29 +65,56 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                 ),
               ),
             ),
+            SizedBox(
+              height: 32,
+            ),
             Expanded(
               child: ListView.builder(
                 itemCount: widget.subTaskData.length,
-                itemBuilder: (ctx, i) => ListTile(
-                    title: Text(widget.subTaskData[i].title),
-                    leading: Theme(
-                      data: ThemeData(
-                          unselectedWidgetColor: Colors.blueAccent[200]),
-                      child: Checkbox(
-                        value: widget.subTaskData[i].iscompleted,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(5)),
-                        onChanged: (val) {
+                itemBuilder: (ctx, i) => Column(
+                  children: [
+                    ListTile(
+                      title: Text(
+                        widget.subTaskData[i].title,
+                        style: TextStyle(
+                            decoration: widget.subTaskData[i].iscompleted
+                                ? TextDecoration.lineThrough
+                                : TextDecoration.none),
+                      ),
+                      trailing: IconButton(
+                        color: widget.subTaskData[i].iscompleted
+                            ? Colors.grey
+                            : Colors.blueAccent[200],
+                        icon: Icon(Icons.delete),
+                        onPressed: () {
                           setState(() {
-                            widget.subTaskData[i].iscompleted = val!;
-                            if (widget.subTaskData[i].iscompleted == true) {
-                              widget.subTaskData.removeWhere((element) =>
-                                  element.id == widget.subTaskData[i].id);
-                            }
+                            widget.subTaskData.removeWhere((element) =>
+                                element.id == widget.subTaskData[i].id);
                           });
                         },
                       ),
-                    )),
+                      leading: Theme(
+                        data: ThemeData(
+                            unselectedWidgetColor: Colors.blueAccent[200]),
+                        child: Checkbox(
+                          activeColor: Colors.grey,
+                          value: widget.subTaskData[i].iscompleted,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(5)),
+                          onChanged: (val) {
+                            setState(() {
+                              widget.subTaskData[i].iscompleted = val!;
+                            });
+                          },
+                        ),
+                      ),
+                    ),
+                    Divider(
+                      height: 6,
+                      thickness: 1,
+                    ),
+                  ],
+                ),
               ),
             )
           ],

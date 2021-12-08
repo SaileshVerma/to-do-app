@@ -26,18 +26,18 @@ class _AddSubTaskState extends State<AddSubTask> {
                   content: Text("task added successfully")));
               Navigator.pop(context);
             },
-            child: Text("OK"))
+            child: Text("DONE"))
       ],
-      title: Text("Lets Add Today Work : )"),
+      title: Text("Add Something!"),
       content: Container(
-        height: 100,
+        height: 50,
         child: Column(
           children: [
             TextField(
               //controller: con,
 
               decoration: InputDecoration(
-                hintText: "title",
+                hintText: "Task Title",
               ),
               onChanged: (val) {
                 obj.title = val;
