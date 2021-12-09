@@ -34,7 +34,11 @@ class TaskGrid extends StatefulWidget {
 }
 
 class _TaskGridState extends State<TaskGrid> {
-  TaskModel obj = TaskModel(true, (DateTime.now()).toString(), "", "", []);
+  TaskModel obj = TaskModel(
+      id: (DateTime.now()).toString(),
+      title: "",
+      description: "",
+      subTaskData: []);
   @override
   void initState() {
     obj.id = widget.id;
@@ -93,9 +97,8 @@ class _TaskGridState extends State<TaskGrid> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(
-              height: 15,
-            ),
+            const SizedBox(
+              height: 15  ),
             Text(
               widget.title,
               style: TextStyle(
@@ -120,9 +123,7 @@ class _TaskGridState extends State<TaskGrid> {
                     fontSize: 12),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -138,29 +139,31 @@ class _TaskGridState extends State<TaskGrid> {
                       });
                       widget.getId(obj);
                     }),
-                SizedBox(
+                const SizedBox(
                   width: 22,
                 ),
                 IconButton(
-                    onPressed: () {
-                      widget.getDeletedTitle(widget.title);
-                      Scaffold.of(context).showSnackBar(SnackBar(
-                          duration: Duration(seconds: 1),
-                          content: Text("Item deleted Successfully")));
-                    },
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.white,
-                    )),
+                  onPressed: () {
+                    widget.getDeletedTitle(widget.title);
+                    Scaffold.of(context).showSnackBar(SnackBar(
+                        duration: Duration(seconds: 1),
+                        content: Text("Item deleted Successfully")));
+                  },
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
+                ),
                 IconButton(
-                    onPressed: () {
-                      widget.getEditedTask(obj);
-                      editTask();
-                    },
-                    icon: Icon(
-                      Icons.edit,
-                      color: Colors.white,
-                    )),
+                  onPressed: () {
+                    widget.getEditedTask(obj);
+                    editTask();
+                  },
+                  icon: const Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  ),
+                ),
               ],
             )
           ],

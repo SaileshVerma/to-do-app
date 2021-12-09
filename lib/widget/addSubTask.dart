@@ -11,7 +11,7 @@ class AddSubTask extends StatefulWidget {
 }
 
 class _AddSubTaskState extends State<AddSubTask> {
-  SubTaskModel obj = SubTaskModel(DateTime.now().toString(), "", false);
+  SubTaskModel obj = SubTaskModel(id: DateTime.now().toString(), title: "");
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -26,9 +26,9 @@ class _AddSubTaskState extends State<AddSubTask> {
                   content: Text("task added successfully")));
               Navigator.pop(context);
             },
-            child: Text("DONE"))
+            child: const Text("DONE"))
       ],
-      title: Text("Add Something!"),
+      title: const Text("Add Something!"),
       content: Container(
         height: 50,
         child: Column(

@@ -3,6 +3,7 @@ import 'package:todo/models/subtaskmodel.dart';
 import 'package:todo/screens/activeTaskList.dart';
 import 'package:todo/screens/completedTaskList.dart';
 import 'package:todo/widget/addTaskbox.dart';
+import 'package:todo/widget/emptyScreenText.dart';
 import 'package:todo/widget/taskGrid.dart';
 
 import '../models/taskmodel.dart';
@@ -14,41 +15,79 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<TaskModel> data = [
-    TaskModel(false, "1", "Meeting",
-        "attend a meeting at 3 PM todayMtend a meeting at 3 PM", [
-      SubTaskModel("1", "meeting 1", false),
-      SubTaskModel("2", "meeting 2", false),
-      SubTaskModel("3", "meeting 3", false),
-      SubTaskModel("4", "meeting 4", false),
-      SubTaskModel("5", "meeting 5", false),
-    ]),
-    TaskModel(false, "2", "Assignment",
-        "complete all the pending assignment of lab practical", []),
-    TaskModel(false, "3", "Maths Assignment",
-        "submit the maths assignemnt to your teacher", []),
-    TaskModel(false, "4", "Call ur friend",
-        "tell ur friend about the work assign by the teacher", []),
+    TaskModel(
+        isActive: false,
+        id: "1",
+        title: "Meeting",
+        description: "attend a meeting at 3 PM todayMtend a meeting at 3 PM",
+        subTaskData: [
+          SubTaskModel(id: "1", title: "meeting 1", iscompleted: false),
+          SubTaskModel(id: "2", title: "meeting 2", iscompleted: false),
+          SubTaskModel(id: "3", title: "meeting 3", iscompleted: false),
+          SubTaskModel(id: "4", title: "meeting 4", iscompleted: false),
+          SubTaskModel(id: "5", title: "meeting 5", iscompleted: false),
+        ]),
+    TaskModel(
+        isActive: false,
+        id: "2",
+        title: "Assignment",
+        description: "complete all the pending assignment of lab practical",
+        subTaskData: []),
+    TaskModel(
+        isActive: false,
+        id: "3",
+        title: "Maths Assignment",
+        description: "submit the maths assignemnt to your teacher",
+        subTaskData: []),
+    TaskModel(
+        isActive: false,
+        id: "4",
+        title: "Call ur friend",
+        description: "tell ur friend about the work assign by the teacher",
+        subTaskData: []),
   ];
 
-  //
+  void changeStatus(value, data) {
+    setState(() {
+      data[data.indexWhere((element) => element.id == value.id)].isActive =
+          value.isActive;
+    });
+  }
+
+  void deleteTask(List<TaskModel> data, String val) {
+    setState(() {
+      data.removeWhere((e) => e.title == val);
+    });
+  }
+
+  void editDescription(List<TaskModel> data, TaskModel v) {
+    setState(() {
+      data[data.indexWhere((e) => e.title == v.title)].description =
+          v.description;
+    });
+  }
+
+  void addTask() {
+    showDialog(
+      context: context,
+      builder: (context) => Container(child: AddTaskBox(
+        getaddedvalues: (i) {
+          setState(() {
+            TaskModel obj = new TaskModel(
+                isActive: i.isActive,
+                id: i.id,
+                title: i.title,
+                description: i.description,
+                subTaskData: i.subTaskData);
+            data.add(obj);
+          });
+        },
+      )),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
-    void addTask() {
-      showDialog(
-        context: context,
-        builder: (context) => Container(child: AddTaskBox(
-          getaddedvalues: (i) {
-            setState(() {
-              TaskModel obj = new TaskModel(
-                  i.isActive, i.id, i.title, i.description, i.subTaskData);
-              data.add(obj);
-            });
-          },
-        )),
-      );
-    }
-
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -65,28 +104,15 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             indicatorColor: Colors.white,
             tabs: [
+              Tab(child: const Text("ALL", style: TextStyle(fontSize: 15))),
+              Tab(child: const Text("ACTIVE", style: TextStyle(fontSize: 15))),
               Tab(
-                child: Text(
-                  "ALL",
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-              Tab(
-                child: Text(
-                  "ACTIVE",
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-              Tab(
-                child: Text(
-                  "COMPLETED",
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
+                  child:
+                      const Text("COMPLETED", style: TextStyle(fontSize: 15)))
             ],
           ),
           backgroundColor: Colors.blueAccent[200],
-          title: Text(
+          title: const Text(
             "To-Do",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
           ),
@@ -96,23 +122,14 @@ class _MyHomePageState extends State<MyHomePage> {
             allTaskList(data),
             ActiveTaskList(
                 getId: (value) {
-                  setState(() {
-                    data[data.indexWhere((element) => element.id == value.id)]
-                        .isActive = value.isActive;
-                    print(value.isActive);
-                  });
+                  changeStatus(value, data);
                 },
                 getDeletedTitle: (val) {
-                  setState(() {
-                    data.removeWhere((e) => e.title == val);
-                  });
+                  deleteTask(data, val);
                 },
                 getEditedTask: (v) {
                   if (v.title.isNotEmpty) {
-                    setState(() {
-                      data[data.indexWhere((e) => e.title == v.title)]
-                          .description = v.description;
-                    });
+                    editDescription(data, v);
                   }
                 },
                 activeData: data
@@ -120,23 +137,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     .toList()),
             CompletedTaskList(
                 getId: (value) {
-                  setState(() {
-                    data[data.indexWhere((element) => element.id == value.id)]
-                        .isActive = value.isActive;
-                    print(value.isActive);
-                  });
+                  changeStatus(value, data);
                 },
                 getDeletedTitle: (val) {
-                  setState(() {
-                    data.removeWhere((e) => e.title == val);
-                  });
+                  deleteTask(data, val);
                 },
                 getEditedTask: (v) {
                   if (v.title.isNotEmpty) {
-                    setState(() {
-                      data[data.indexWhere((e) => e.title == v.title)]
-                          .description = v.description;
-                    });
+                    editDescription(data, v);
                   }
                 },
                 completeList:
@@ -147,7 +155,7 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Colors.blueAccent[200],
           onPressed: () => addTask(),
           tooltip: 'Add new note',
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ),
       ),
     );
@@ -158,18 +166,7 @@ class _MyHomePageState extends State<MyHomePage> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: data.isEmpty
-            ? Center(
-                child: Container(
-                  child: Text(
-                    "Lets Do Something",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.grey[500],
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              )
+            ? EmptyScreenText("Lets Do Something")
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -188,24 +185,14 @@ class _MyHomePageState extends State<MyHomePage> {
                               //   });
                               // },
                               getId: (value) {
-                                setState(() {
-                                  data[data.indexWhere(
-                                          (element) => element.id == value.id)]
-                                      .isActive = value.isActive;
-                                });
+                                changeStatus(value, data);
                               },
                               getDeletedTitle: (val) {
-                                setState(() {
-                                  data.removeWhere((e) => e.title == val);
-                                });
+                                deleteTask(data, val);
                               },
                               getEditedTask: (v) {
                                 if (v.title.isNotEmpty) {
-                                  setState(() {
-                                    data[data.indexWhere(
-                                            (e) => e.title == v.title)]
-                                        .description = v.description;
-                                  });
+                                  editDescription(data, v);
                                 }
                               },
                               id: data[i].id,

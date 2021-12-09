@@ -12,7 +12,11 @@ class AddTaskBox extends StatefulWidget {
 }
 
 class _AddTaskBoxState extends State<AddTaskBox> {
-  TaskModel obj = new TaskModel(false, (DateTime.now()).toString(), "", "", []);
+  TaskModel obj = new TaskModel(
+      id: (DateTime.now()).toString(),
+      description: "",
+      title: "",
+      subTaskData: []);
   late TextEditingController con;
 
   @override
@@ -26,12 +30,12 @@ class _AddTaskBoxState extends State<AddTaskBox> {
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),
-                  content: Text("task added successfully")));
+                  content: const Text("task added successfully")));
               Navigator.pop(context);
             },
-            child: Text("OK"))
+            child: const Text("OK"))
       ],
-      title: Text("Lets Add Today Work : )"),
+      title: const Text("Lets Add Today Work : )"),
       content: Container(
         height: 200,
         child: Column(

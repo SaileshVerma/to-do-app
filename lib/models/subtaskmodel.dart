@@ -1,6 +1,7 @@
 class SubTaskModel {
-  String id;
+  final String id;
   String title;
   bool iscompleted;
-  SubTaskModel(this.id, this.title, this.iscompleted);
+  SubTaskModel(
+      {required this.id, required this.title, this.iscompleted = false});
 }

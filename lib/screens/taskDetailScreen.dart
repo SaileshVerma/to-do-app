@@ -20,14 +20,6 @@ class TaskDetailScreen extends StatefulWidget {
 }
 
 class _TaskDetailScreenState extends State<TaskDetailScreen> {
-  // List<SubTaskModel> subData = [
-  //   SubTaskModel("1", "title", false),
-  //   SubTaskModel("2", "title", false),
-  //   SubTaskModel("3", "title", false),
-  //   SubTaskModel("4", "title", false),
-  //   SubTaskModel("5", "title", false),
-  // ];
-
   @override
   Widget build(BuildContext context) {
     void addSubTask() {
@@ -53,7 +45,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(8.0),
         child: Column(
           children: [
             Container(
@@ -69,9 +61,10 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               height: 32,
             ),
             Expanded(
-              child: ListView.builder(
+              child: ReorderableListView.builder(
                 itemCount: widget.subTaskData.length,
                 itemBuilder: (ctx, i) => Column(
+                  key: Key(i.toString()),
                   children: [
                     ListTile(
                       title: Text(
@@ -115,6 +108,16 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                     ),
                   ],
                 ),
+                onReorder: (oldindex, newindex) {
+                  setState(() {
+                    if (oldindex < newindex) {
+                      newindex = newindex - 1;
+                    }
+
+                    final item = (widget.subTaskData).removeAt(oldindex);
+                    widget.subTaskData.insert(newindex, item);
+                  });
+                },
               ),
             )
           ],

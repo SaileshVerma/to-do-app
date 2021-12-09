@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/models/taskmodel.dart';
+import 'package:todo/widget/emptyScreenText.dart';
 import 'package:todo/widget/taskGrid.dart';
 
 // ignore: must_be_immutable
@@ -25,17 +26,8 @@ class _CompletedTaskListState extends State<CompletedTaskList> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: widget.completeList.isEmpty
-            ? Center(
-                child: Container(
-                  child: Text(
-                    "No Task Completed Yet Hurry Up!!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.grey[500],
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
+            ? EmptyScreenText(
+                "No Task Completed Yet Hurry Up!!",
               )
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,

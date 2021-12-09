@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/models/taskmodel.dart';
+import 'package:todo/widget/emptyScreenText.dart';
 import 'package:todo/widget/taskGrid.dart';
 
 // ignore: must_be_immutable
@@ -19,24 +20,38 @@ class ActiveTaskList extends StatefulWidget {
 }
 
 class _ActiveTaskListState extends State<ActiveTaskList> {
+  void changeStatus(TaskModel value, List<TaskModel> activeData) {
+    setState(() {
+      widget
+          .activeData[
+              widget.activeData.indexWhere((element) => element.id == value.id)]
+          .isActive = value.isActive;
+      widget.getId(value);
+    });
+  }
+
+  void deleteTask(List<TaskModel> activeData, String val) {
+    setState(() {
+      widget.activeData.removeWhere((e) => e.title == val);
+      widget.getDeletedTitle(val);
+    });
+  }
+
+  void editDescription(List<TaskModel> activeData, TaskModel v) {
+    setState(() {
+      widget.activeData[widget.activeData.indexWhere((e) => e.title == v.title)]
+          .description = v.description;
+      widget.getEditedTask(v);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: widget.activeData.isEmpty
-            ? Center(
-                child: Container(
-                  child: Text(
-                    "No Active Task!!!!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.grey[500],
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              )
+            ? EmptyScreenText("No Active Task!!")
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -55,31 +70,14 @@ class _ActiveTaskListState extends State<ActiveTaskList> {
                               //   });
                               // },
                               getId: (value) {
-                                setState(() {
-                                  widget
-                                      .activeData[widget.activeData.indexWhere(
-                                          (element) => element.id == value.id)]
-                                      .isActive = value.isActive;
-                                  widget.getId(value);
-                                });
+                                changeStatus(value, widget.activeData);
                               },
                               getDeletedTitle: (val) {
-                                setState(() {
-                                  widget.activeData
-                                      .removeWhere((e) => e.title == val);
-                                  widget.getDeletedTitle(val);
-                                });
+                                deleteTask(widget.activeData, val);
                               },
                               getEditedTask: (v) {
                                 if (v.title.isNotEmpty) {
-                                  setState(() {
-                                    widget
-                                        .activeData[widget.activeData
-                                            .indexWhere(
-                                                (e) => e.title == v.title)]
-                                        .description = v.description;
-                                    widget.getEditedTask(v);
-                                  });
+                                  editDescription(widget.activeData, v);
                                 }
                               },
                               id: widget.activeData[i].id,

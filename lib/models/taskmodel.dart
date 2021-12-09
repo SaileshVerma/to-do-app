@@ -7,5 +7,9 @@ class TaskModel {
   bool isActive;
   List<SubTaskModel> subTaskData;
   TaskModel(
-      this.isActive, this.id, this.title, this.description, this.subTaskData);
+      {this.isActive = false,
+      required this.id,
+      required this.title,
+      required this.description,
+      required this.subTaskData});
 }
