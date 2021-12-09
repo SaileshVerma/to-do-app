@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo/models/subtaskmodel.dart';
-import 'package:todo/screens/activeTaskList.dart';
-import 'package:todo/screens/completedTaskList.dart';
-import 'package:todo/widget/addTaskbox.dart';
-import 'package:todo/widget/emptyScreenText.dart';
-import 'package:todo/widget/taskGrid.dart';
 
+import '../models/subtaskmodel.dart';
 import '../models/taskmodel.dart';
+import '../widget/addTaskbox.dart';
+
+import '../screens/taskListScreen.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -16,17 +14,17 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   List<TaskModel> data = [
     TaskModel(
-        isActive: false,
-        id: "1",
-        title: "Meeting",
-        description: "attend a meeting at 3 PM todayMtend a meeting at 3 PM",
-        subTaskData: [
-          SubTaskModel(id: "1", title: "meeting 1", iscompleted: false),
-          SubTaskModel(id: "2", title: "meeting 2", iscompleted: false),
-          SubTaskModel(id: "3", title: "meeting 3", iscompleted: false),
-          SubTaskModel(id: "4", title: "meeting 4", iscompleted: false),
-          SubTaskModel(id: "5", title: "meeting 5", iscompleted: false),
-        ]),
+      id: "1",
+      title: "Meeting",
+      description: "attend a meeting at 3 PM todayMtend a meeting at 3 PM",
+      subTaskData: [
+        SubTaskModel(id: "1", title: "meeting 1"),
+        SubTaskModel(id: "2", title: "meeting 2"),
+        SubTaskModel(id: "3", title: "meeting 3"),
+        SubTaskModel(id: "4", title: "meeting 4"),
+        SubTaskModel(id: "5", title: "meeting 5"),
+      ],
+    ),
     TaskModel(
         isActive: false,
         id: "2",
@@ -47,23 +45,23 @@ class _MyHomePageState extends State<MyHomePage> {
         subTaskData: []),
   ];
 
-  void changeStatus(value, data) {
+  void changeStatus(TaskModel obj) {
     setState(() {
-      data[data.indexWhere((element) => element.id == value.id)].isActive =
-          value.isActive;
+      data[data.indexWhere((element) => element.id == obj.id)].isActive =
+          obj.isActive;
     });
   }
 
-  void deleteTask(List<TaskModel> data, String val) {
+  void deleteTask(String title) {
     setState(() {
-      data.removeWhere((e) => e.title == val);
+      data.removeWhere((e) => e.title == title);
     });
   }
 
-  void editDescription(List<TaskModel> data, TaskModel v) {
+  void editDescription(TaskModel obj) {
     setState(() {
-      data[data.indexWhere((e) => e.title == v.title)].description =
-          v.description;
+      data[data.indexWhere((e) => e.title == obj.title)].description =
+          obj.description;
     });
   }
 
@@ -71,7 +69,7 @@ class _MyHomePageState extends State<MyHomePage> {
     showDialog(
       context: context,
       builder: (context) => Container(child: AddTaskBox(
-        getaddedvalues: (i) {
+        setaddedvalues: (i) {
           setState(() {
             TaskModel obj = new TaskModel(
                 isActive: i.isActive,
@@ -119,91 +117,37 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         body: TabBarView(
           children: [
-            allTaskList(data),
-            ActiveTaskList(
-                getId: (value) {
-                  changeStatus(value, data);
-                },
-                getDeletedTitle: (val) {
-                  deleteTask(data, val);
-                },
-                getEditedTask: (v) {
-                  if (v.title.isNotEmpty) {
-                    editDescription(data, v);
-                  }
-                },
-                activeData: data
-                    .where((element) => element.isActive == false)
-                    .toList()),
-            CompletedTaskList(
-                getId: (value) {
-                  changeStatus(value, data);
-                },
-                getDeletedTitle: (val) {
-                  deleteTask(data, val);
-                },
-                getEditedTask: (v) {
-                  if (v.title.isNotEmpty) {
-                    editDescription(data, v);
-                  }
-                },
-                completeList:
-                    data.where((element) => element.isActive == true).toList())
+            TaskListScreen(
+              emptyDisplayText: "Lets Do Something",
+              setId: changeStatus,
+              setDeletedTitle: deleteTask,
+              setEditedTask: editDescription,
+              taskDataList: data, //complete task list
+            ),
+            TaskListScreen(
+              emptyDisplayText: "No Active Task!!",
+              setId: changeStatus,
+              setDeletedTitle: deleteTask,
+              setEditedTask: editDescription,
+              taskDataList: // contains active data list
+                  data.where((element) => element.isActive == false).toList(),
+            ),
+            TaskListScreen(
+              emptyDisplayText: "No Task Completed Yet Hurry Up!!",
+              setId: changeStatus,
+              setDeletedTitle: deleteTask,
+              setEditedTask: editDescription,
+              taskDataList: //contains completed data list
+                  data.where((element) => element.isActive == true).toList(),
+            )
           ],
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.blueAccent[200],
-          onPressed: () => addTask(),
+          onPressed: addTask,
           tooltip: 'Add new note',
           child: const Icon(Icons.add),
         ),
-      ),
-    );
-  }
-
-  Widget allTaskList(List<TaskModel> data) {
-    return Container(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: data.isEmpty
-            ? EmptyScreenText("Lets Do Something")
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: GridView.builder(
-                        itemCount: data.length,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 11,
-                          mainAxisSpacing: 11,
-                        ),
-                        itemBuilder: (ctx, i) => TaskGrid(
-                              // getAddedSubTask: (val) {
-                              //   setState(() {
-                              //     data[i].subTaskData.add(val);
-                              //   });
-                              // },
-                              getId: (value) {
-                                changeStatus(value, data);
-                              },
-                              getDeletedTitle: (val) {
-                                deleteTask(data, val);
-                              },
-                              getEditedTask: (v) {
-                                if (v.title.isNotEmpty) {
-                                  editDescription(data, v);
-                                }
-                              },
-                              id: data[i].id,
-                              isAcitve: data[i].isActive,
-                              title: data[i].title,
-                              desc: data[i].description,
-                              subTaskData: data[i].subTaskData,
-                            )),
-                  ),
-                ],
-              ),
       ),
     );
   }

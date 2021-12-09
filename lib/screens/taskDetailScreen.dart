@@ -25,7 +25,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     void addSubTask() {
       showDialog(
           context: context,
-          builder: (context) => AddSubTask(getaddedsubtask: (val) {
+          builder: (context) => AddSubTask(setaddedsubtask: (val) {
                 setState(() {
                   widget.subTaskData.add(val);
                   // widget.getAddedSubTaskvalue(val);

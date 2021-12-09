@@ -3,8 +3,8 @@ import 'package:todo/models/subtaskmodel.dart';
 
 // ignore: must_be_immutable
 class AddSubTask extends StatefulWidget {
-  Function(SubTaskModel) getaddedsubtask;
-  AddSubTask({required this.getaddedsubtask});
+  Function(SubTaskModel) setaddedsubtask;
+  AddSubTask({required this.setaddedsubtask});
 
   @override
   _AddSubTaskState createState() => _AddSubTaskState();
@@ -19,7 +19,7 @@ class _AddSubTaskState extends State<AddSubTask> {
       actions: [
         TextButton(
             onPressed: () {
-              widget.getaddedsubtask(obj);
+              widget.setaddedsubtask(obj);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),
@@ -35,7 +35,6 @@ class _AddSubTaskState extends State<AddSubTask> {
           children: [
             TextField(
               //controller: con,
-
               decoration: InputDecoration(
                 hintText: "Task Title",
               ),

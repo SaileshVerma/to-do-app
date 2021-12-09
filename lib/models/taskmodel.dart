@@ -6,6 +6,7 @@ class TaskModel {
   String id;
   bool isActive;
   List<SubTaskModel> subTaskData;
+
   TaskModel(
       {this.isActive = false,
       required this.id,

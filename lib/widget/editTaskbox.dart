@@ -5,14 +5,14 @@ import 'package:todo/models/taskmodel.dart';
 
 // ignore: must_be_immutable
 class EditTaskBox extends StatefulWidget {
-  Function(TaskModel) getEditedvalues;
+  Function(TaskModel) setEditedvalues;
 
   late String receviedTitle, receviedDesc, receivedId;
   late bool isActive;
   late List<SubTaskModel> datalist;
 
   EditTaskBox(
-      {required this.getEditedvalues,
+      {required this.setEditedvalues,
       required this.datalist,
       required this.isActive,
       required this.receivedId,
@@ -23,7 +23,7 @@ class EditTaskBox extends StatefulWidget {
 }
 
 class _EditTaskBoxState extends State<EditTaskBox> {
-  TaskModel obj = new TaskModel(
+  TaskModel obj = TaskModel(
       id: (DateTime.now()).toString(),
       description: "",
       title: "",
@@ -48,7 +48,7 @@ class _EditTaskBoxState extends State<EditTaskBox> {
       actions: [
         TextButton(
             onPressed: () {
-              widget.getEditedvalues(obj);
+              widget.setEditedvalues(obj);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),
@@ -59,7 +59,7 @@ class _EditTaskBoxState extends State<EditTaskBox> {
       ],
       title: const Text("Lets Add Today Work : )"),
       content: Container(
-        height: 200,
+        height: 100,
         child: Column(
           children: [
             TextField(

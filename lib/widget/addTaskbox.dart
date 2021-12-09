@@ -4,8 +4,8 @@ import 'package:todo/models/taskmodel.dart';
 
 // ignore: must_be_immutable
 class AddTaskBox extends StatefulWidget {
-  Function(TaskModel) getaddedvalues;
-  AddTaskBox({required this.getaddedvalues});
+  Function(TaskModel) setaddedvalues;
+  AddTaskBox({required this.setaddedvalues});
 
   @override
   _AddTaskBoxState createState() => _AddTaskBoxState();
@@ -26,7 +26,7 @@ class _AddTaskBoxState extends State<AddTaskBox> {
       actions: [
         TextButton(
             onPressed: () {
-              widget.getaddedvalues(obj);
+              widget.setaddedvalues(obj);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),
