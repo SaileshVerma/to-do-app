@@ -59,9 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void deleteTask(String title) {
+  void deleteTask(String id) {
     setState(() {
-      data.removeWhere((e) => e.title == title);
+      data.removeWhere((e) => e.id == id);
     });
   }
 
@@ -122,14 +122,14 @@ class _MyHomePageState extends State<MyHomePage> {
             TaskListScreen(
               emptyDisplayText: "Lets Do Something",
               changeStatus: changeStatus,
-              setDeletedTitle: deleteTask,
+              deleteTask: deleteTask,
               editDescription: editDescription,
               taskDataList: data, //complete task list
             ),
             TaskListScreen(
               emptyDisplayText: "No Active Task!!",
               changeStatus: changeStatus,
-              setDeletedTitle: deleteTask,
+              deleteTask: deleteTask,
               editDescription: editDescription,
               taskDataList: // contains active data list
                   data.where((element) => element.isActive == false).toList(),
@@ -137,7 +137,7 @@ class _MyHomePageState extends State<MyHomePage> {
             TaskListScreen(
               emptyDisplayText: "No Task Completed Yet Hurry Up!!",
               changeStatus: changeStatus,
-              setDeletedTitle: deleteTask,
+              deleteTask: deleteTask,
               editDescription: editDescription,
               taskDataList: //contains completed data list
                   data.where((element) => element.isActive == true).toList(),

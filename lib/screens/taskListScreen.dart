@@ -4,45 +4,33 @@ import '../widget/emptyScreenText.dart';
 import '../widget/taskGrid.dart';
 
 // ignore: must_be_immutable
-class TaskListScreen extends StatefulWidget {
-  Function(String) changeStatus;
-  Function(String) setDeletedTitle;
+class TaskListScreen extends StatelessWidget {
+  Function(String id) changeStatus;
+  Function(String id) deleteTask;
   Function(String id, String title, String desc) editDescription;
   late List<TaskModel> taskDataList;
   late String emptyDisplayText;
   TaskListScreen({
     required this.emptyDisplayText,
-    required this.setDeletedTitle,
+    required this.deleteTask,
     required this.editDescription,
     required this.changeStatus,
     required this.taskDataList,
   });
 
   @override
-  _TaskListScreenState createState() => _TaskListScreenState();
-}
-
-class _TaskListScreenState extends State<TaskListScreen> {
-  void deleteTask(String title) {
-    setState(() {
-      widget.taskDataList.removeWhere((e) => e.title == title);
-      widget.setDeletedTitle(title);
-    });
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: widget.taskDataList.isEmpty
-            ? EmptyScreenText(widget.emptyDisplayText)
+        child: taskDataList.isEmpty
+            ? EmptyScreenText(emptyDisplayText)
             : Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
                     child: GridView.builder(
-                      itemCount: widget.taskDataList.length,
+                      itemCount: taskDataList.length,
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         crossAxisSpacing: 11,
@@ -54,14 +42,14 @@ class _TaskListScreenState extends State<TaskListScreen> {
                         //     widget.activeData[i].subTaskData.add(val);
                         //   });
                         // },
-                        changeStatus: widget.changeStatus,
-                        setDeletedTitle: deleteTask,
-                        editDescription: widget.editDescription,
-                        id: widget.taskDataList[i].id,
-                        isAcitve: widget.taskDataList[i].isActive,
-                        title: widget.taskDataList[i].title,
-                        desc: widget.taskDataList[i].description,
-                        subTaskData: widget.taskDataList[i].subTaskData,
+                        changeStatus: changeStatus,
+                        deleteTask: deleteTask,
+                        editDescription: editDescription,
+                        id: taskDataList[i].id,
+                        isAcitve: taskDataList[i].isActive,
+                        title: taskDataList[i].title,
+                        desc: taskDataList[i].description,
+                        subTaskData: taskDataList[i].subTaskData,
                       ),
                     ),
                   ),

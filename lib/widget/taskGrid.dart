@@ -8,7 +8,7 @@ import '../widget/editTaskbox.dart';
 // ignore: must_be_immutable
 class TaskGrid extends StatelessWidget {
   Function(String id) changeStatus;
-  Function(String) setDeletedTitle;
+  Function(String id) deleteTask;
   Function(String id, String title, String desc) editDescription;
   //Function(SubTaskModel) getAddedSubTask;
   late String id;
@@ -23,25 +23,10 @@ class TaskGrid extends StatelessWidget {
     required this.id,
     required this.isAcitve,
     required this.subTaskData,
-    required this.setDeletedTitle,
+    required this.deleteTask,
     required this.editDescription,
     // required this.getAddedSubTask,
   });
-
-  // TaskModel obj = TaskModel(
-  //     id: (DateTime.now()).toString(),
-  //     title: "",
-  //     description: "",
-  //     subTaskData: []);
-  // @override
-  // void initState() {
-  //   obj.id = widget.id;
-  //   obj.isActive = widget.isAcitve;
-  //   obj.title = widget.title;
-  //   obj.description = widget.desc;
-
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +50,7 @@ class TaskGrid extends StatelessWidget {
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
           // navigating to task's subtask screen
           builder: (ctx) => TaskDetailScreen(
-              // getAddedSubTaskvalue: (val) {
-              //   setState(() {
-              //     widget.getAddedSubTask(val);
-              //   });
-              // },
-              subTaskData: subTaskData,
-              title: title,
-              desc: desc))),
+              subTaskData: subTaskData, title: title, desc: desc))),
       child: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -125,10 +103,10 @@ class TaskGrid extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    setDeletedTitle(title);
-                    Scaffold.of(context).showSnackBar(SnackBar(
+                    deleteTask(id);
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         duration: Duration(seconds: 1),
-                        content: Text("Item deleted Successfully")));
+                        content: const Text("task deleted successfully")));
                   },
                   icon: const Icon(
                     Icons.delete,
