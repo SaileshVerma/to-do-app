@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todo/models/subtaskmodel.dart';
-import 'package:todo/models/taskmodel.dart';
+import '../models/subtaskmodel.dart';
+import '../models/taskmodel.dart';
 
-import 'package:todo/screens/taskDetailScreen.dart';
+import '../screens/taskDetailScreen.dart';
 
-import 'editTaskbox.dart';
+import '../widget/editTaskbox.dart';
 
 // ignore: must_be_immutable
 class TaskGrid extends StatefulWidget {

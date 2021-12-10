@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todo/models/subtaskmodel.dart';
-import 'package:todo/widget/addSubTask.dart';
+import '../models/subtaskmodel.dart';
+import '../widget/addSubTask.dart';
 
 // ignore: must_be_immutable
 class TaskDetailScreen extends StatefulWidget {

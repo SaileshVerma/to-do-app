@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo/models/taskmodel.dart';
-import 'package:todo/widget/emptyScreenText.dart';
-import 'package:todo/widget/taskGrid.dart';
+import '../models/taskmodel.dart';
+import '../widget/emptyScreenText.dart';
+import '../widget/taskGrid.dart';
 
 // ignore: must_be_immutable
 class TaskListScreen extends StatefulWidget {

@@ -1,4 +1,4 @@
-import 'package:todo/models/subtaskmodel.dart';
+import '../models/subtaskmodel.dart';
 
 class TaskModel {
   String title;

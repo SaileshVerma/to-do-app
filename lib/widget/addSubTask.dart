@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/models/subtaskmodel.dart';
+import '../models/subtaskmodel.dart';
 
 // ignore: must_be_immutable
 class AddSubTask extends StatefulWidget {

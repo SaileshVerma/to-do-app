@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:todo/models/taskmodel.dart';
+import '../models/taskmodel.dart';
 
 // ignore: must_be_immutable
 class AddTaskBox extends StatefulWidget {

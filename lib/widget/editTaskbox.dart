@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todo/models/subtaskmodel.dart';
+import '../models/subtaskmodel.dart';
 
-import 'package:todo/models/taskmodel.dart';
+import '../models/taskmodel.dart';
 
 // ignore: must_be_immutable
 class EditTaskBox extends StatefulWidget {
@@ -55,11 +55,11 @@ class _EditTaskBoxState extends State<EditTaskBox> {
                   content: Text("task edited successfully")));
               Navigator.pop(context);
             },
-            child: const Text("OK"))
+            child: Text("OK"))
       ],
-      title: const Text("Lets Add Today Work : )"),
+      title: Text("Lets Add Today Work : )"),
       content: Container(
-        height: 100,
+        height: 150,
         child: Column(
           children: [
             TextField(
@@ -74,7 +74,7 @@ class _EditTaskBoxState extends State<EditTaskBox> {
                 keyboardType: TextInputType.multiline,
                 minLines: 1,
                 maxLines: 6,
-                decoration: const InputDecoration(hintText: "description"),
+                decoration: InputDecoration(hintText: "description"),
                 onChanged: (_) {
                   obj.description = descController.text;
                   obj.title = titleController.text;
