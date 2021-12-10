@@ -22,30 +22,30 @@ class TaskListScreen extends StatefulWidget {
 }
 
 class _TaskListScreenState extends State<TaskListScreen> {
-  void changeStatus(TaskModel value, List<TaskModel> activeData) {
-    setState(() {
-      widget
-          .taskDataList[widget.taskDataList
-              .indexWhere((element) => element.id == value.id)]
-          .isActive = value.isActive;
-      widget.setId(value);
-    });
-  }
-
-  void deleteTask(List<TaskModel> activeData, String val) {
-    setState(() {
-      widget.taskDataList.removeWhere((e) => e.title == val);
-      widget.setDeletedTitle(val);
-    });
-  }
-
-  void editDescription(List<TaskModel> activeData, TaskModel v) {
+  void changeStatus(TaskModel obj) {
     setState(() {
       widget
           .taskDataList[
-              widget.taskDataList.indexWhere((e) => e.title == v.title)]
-          .description = v.description;
-      widget.setEditedTask(v);
+              widget.taskDataList.indexWhere((element) => element.id == obj.id)]
+          .isActive = obj.isActive;
+      widget.setId(obj);
+    });
+  }
+
+  void deleteTask(String title) {
+    setState(() {
+      widget.taskDataList.removeWhere((e) => e.title == title);
+      widget.setDeletedTitle(title);
+    });
+  }
+
+  void editDescription(TaskModel obj) {
+    setState(() {
+      widget
+          .taskDataList[
+              widget.taskDataList.indexWhere((e) => e.title == obj.title)]
+          .description = obj.description;
+      widget.setEditedTask(obj);
     });
   }
 
@@ -73,17 +73,9 @@ class _TaskListScreenState extends State<TaskListScreen> {
                         //     widget.activeData[i].subTaskData.add(val);
                         //   });
                         // },
-                        setId: (value) {
-                          changeStatus(value, widget.taskDataList);
-                        },
-                        setDeletedTitle: (val) {
-                          deleteTask(widget.taskDataList, val);
-                        },
-                        setEditedTask: (v) {
-                          if (v.title.isNotEmpty) {
-                            editDescription(widget.taskDataList, v);
-                          }
-                        },
+                        setId: changeStatus,
+                        setDeletedTitle: deleteTask,
+                        setEditedTask: editDescription,
                         id: widget.taskDataList[i].id,
                         isAcitve: widget.taskDataList[i].isActive,
                         title: widget.taskDataList[i].title,
