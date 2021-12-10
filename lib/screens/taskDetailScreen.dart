@@ -24,13 +24,16 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   Widget build(BuildContext context) {
     void addSubTask() {
       showDialog(
-          context: context,
-          builder: (context) => AddSubTask(setaddedsubtask: (val) {
-                setState(() {
-                  widget.subTaskData.add(val);
-                  // widget.getAddedSubTaskvalue(val);
-                });
-              }));
+        context: context,
+        builder: (context) => AddSubTask(
+          setaddedsubtask: (val) {
+            setState(() {
+              widget.subTaskData.add(val);
+              // widget.getAddedSubTaskvalue(val);
+            });
+          },
+        ),
+      );
     }
 
     return Scaffold(

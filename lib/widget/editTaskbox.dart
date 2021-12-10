@@ -30,6 +30,7 @@ class _EditTaskBoxState extends State<EditTaskBox> {
       subTaskData: []);
 
   late TextEditingController descController, titleController;
+
   @override
   void initState() {
     obj.id = widget.receivedId;

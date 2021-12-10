@@ -3,15 +3,10 @@ import 'package:flutter/material.dart';
 import '../models/taskmodel.dart';
 
 // ignore: must_be_immutable
-class AddTaskBox extends StatefulWidget {
+class AddTaskBox extends StatelessWidget {
   Function(TaskModel) setaddedvalues;
   AddTaskBox({required this.setaddedvalues});
 
-  @override
-  _AddTaskBoxState createState() => _AddTaskBoxState();
-}
-
-class _AddTaskBoxState extends State<AddTaskBox> {
   TaskModel obj = new TaskModel(
       id: (DateTime.now()).toString(),
       description: "",
@@ -26,7 +21,7 @@ class _AddTaskBoxState extends State<AddTaskBox> {
       actions: [
         TextButton(
             onPressed: () {
-              widget.setaddedvalues(obj);
+              setaddedvalues(obj);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),

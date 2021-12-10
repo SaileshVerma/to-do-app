@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import '../models/subtaskmodel.dart';
-import '../models/taskmodel.dart';
 
 import '../screens/taskDetailScreen.dart';
 
 import '../widget/editTaskbox.dart';
 
 // ignore: must_be_immutable
-class TaskGrid extends StatefulWidget {
+class TaskGrid extends StatelessWidget {
   Function(String id) changeStatus;
   Function(String) setDeletedTitle;
   Function(String id, String title, String desc) editDescription;
@@ -29,46 +28,41 @@ class TaskGrid extends StatefulWidget {
     // required this.getAddedSubTask,
   });
 
-  @override
-  _TaskGridState createState() => _TaskGridState();
-}
+  // TaskModel obj = TaskModel(
+  //     id: (DateTime.now()).toString(),
+  //     title: "",
+  //     description: "",
+  //     subTaskData: []);
+  // @override
+  // void initState() {
+  //   obj.id = widget.id;
+  //   obj.isActive = widget.isAcitve;
+  //   obj.title = widget.title;
+  //   obj.description = widget.desc;
 
-class _TaskGridState extends State<TaskGrid> {
-  TaskModel obj = TaskModel(
-      id: (DateTime.now()).toString(),
-      title: "",
-      description: "",
-      subTaskData: []);
-  @override
-  void initState() {
-    obj.id = widget.id;
-    obj.isActive = widget.isAcitve;
-    obj.title = widget.title;
-    obj.description = widget.desc;
-
-    super.initState();
-  }
-
-  void editTask() {
-    showDialog(
-      context: context,
-      builder: (context) => Container(
-        child: EditTaskBox(
-          receivedId: widget.id,
-          datalist: widget.subTaskData,
-          isActive: widget.isAcitve,
-          receviedTitle: widget.title,
-          receviedDesc: widget.desc,
-          editDescription: (id, title, desc) {
-            widget.editDescription(id, title, desc);
-          },
-        ),
-      ),
-    );
-  }
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    void editTask() {
+      showDialog(
+        context: context,
+        builder: (context) => Container(
+          child: EditTaskBox(
+            receivedId: id,
+            datalist: subTaskData,
+            isActive: isAcitve,
+            receviedTitle: title,
+            receviedDesc: desc,
+            editDescription: (id, title, desc) {
+              editDescription(id, title, desc);
+            },
+          ),
+        ),
+      );
+    }
+
     return InkWell(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
           // navigating to task's subtask screen
@@ -78,18 +72,15 @@ class _TaskGridState extends State<TaskGrid> {
               //     widget.getAddedSubTask(val);
               //   });
               // },
-              subTaskData: widget.subTaskData,
-              title: widget.title,
-              desc: widget.desc))),
+              subTaskData: subTaskData,
+              title: title,
+              desc: desc))),
       child: Container(
         decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                widget.isAcitve ? Colors.grey : Colors.blue,
-                Colors.blueGrey
-              ],
+              colors: [isAcitve ? Colors.grey : Colors.blue, Colors.blueGrey],
             ),
             borderRadius: BorderRadius.circular(10)),
         child: Column(
@@ -97,9 +88,9 @@ class _TaskGridState extends State<TaskGrid> {
           children: [
             const SizedBox(height: 15),
             Text(
-              widget.title,
+              title,
               style: TextStyle(
-                  decoration: widget.isAcitve
+                  decoration: isAcitve
                       ? TextDecoration.lineThrough
                       : TextDecoration.none,
                   color: Colors.white,
@@ -109,11 +100,9 @@ class _TaskGridState extends State<TaskGrid> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                widget.desc.length > 35
-                    ? hidetext(widget.desc) + "........"
-                    : widget.desc,
+                desc.length > 35 ? hidetext(desc) + "........" : desc,
                 style: TextStyle(
-                    decoration: widget.isAcitve
+                    decoration: isAcitve
                         ? TextDecoration.lineThrough
                         : TextDecoration.none,
                     color: Colors.white,
@@ -129,16 +118,16 @@ class _TaskGridState extends State<TaskGrid> {
                     activeColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
-                    value: widget.isAcitve,
+                    value: isAcitve,
                     onChanged: (val) {
-                      widget.changeStatus(widget.id);
+                      changeStatus(id);
                     }),
                 const SizedBox(
                   width: 22,
                 ),
                 IconButton(
                   onPressed: () {
-                    widget.setDeletedTitle(widget.title);
+                    setDeletedTitle(title);
                     Scaffold.of(context).showSnackBar(SnackBar(
                         duration: Duration(seconds: 1),
                         content: Text("Item deleted Successfully")));
@@ -150,8 +139,7 @@ class _TaskGridState extends State<TaskGrid> {
                 ),
                 IconButton(
                   onPressed: () {
-                    widget.editDescription(
-                        widget.id, widget.title, widget.desc);
+                    editDescription(id, title, desc);
                     editTask();
                   },
                   icon: const Icon(

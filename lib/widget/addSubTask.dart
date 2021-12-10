@@ -2,15 +2,10 @@ import 'package:flutter/material.dart';
 import '../models/subtaskmodel.dart';
 
 // ignore: must_be_immutable
-class AddSubTask extends StatefulWidget {
+class AddSubTask extends StatelessWidget {
   Function(SubTaskModel) setaddedsubtask;
   AddSubTask({required this.setaddedsubtask});
 
-  @override
-  _AddSubTaskState createState() => _AddSubTaskState();
-}
-
-class _AddSubTaskState extends State<AddSubTask> {
   SubTaskModel obj = SubTaskModel(id: DateTime.now().toString(), title: "");
   @override
   Widget build(BuildContext context) {
@@ -19,7 +14,7 @@ class _AddSubTaskState extends State<AddSubTask> {
       actions: [
         TextButton(
             onPressed: () {
-              widget.setaddedsubtask(obj);
+              setaddedsubtask(obj);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),
