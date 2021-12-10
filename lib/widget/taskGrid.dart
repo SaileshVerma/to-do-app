@@ -8,9 +8,9 @@ import '../widget/editTaskbox.dart';
 
 // ignore: must_be_immutable
 class TaskGrid extends StatefulWidget {
-  Function(TaskModel) setId;
+  Function(String id) changeStatus;
   Function(String) setDeletedTitle;
-  Function(TaskModel) setEditedTask;
+  Function(String id, String title, String desc) setEditedTask;
   //Function(SubTaskModel) getAddedSubTask;
   late String id;
   late bool isAcitve;
@@ -18,7 +18,7 @@ class TaskGrid extends StatefulWidget {
   late String desc;
   late List<SubTaskModel> subTaskData;
   TaskGrid({
-    required this.setId,
+    required this.changeStatus,
     required this.title,
     required this.desc,
     required this.id,
@@ -59,12 +59,8 @@ class _TaskGridState extends State<TaskGrid> {
           isActive: widget.isAcitve,
           receviedTitle: widget.title,
           receviedDesc: widget.desc,
-          setEditedvalues: (i) {
-            setState(() {
-              obj.description = i.description;
-              obj.title = i.title;
-              widget.setEditedTask(obj);
-            });
+          setEditedvalues: (id, title, desc) {
+            widget.setEditedTask(id, title, desc);
           },
         ),
       ),
@@ -133,12 +129,9 @@ class _TaskGridState extends State<TaskGrid> {
                     activeColor: Colors.white,
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5)),
-                    value: obj.isActive,
+                    value: widget.isAcitve,
                     onChanged: (val) {
-                      setState(() {
-                        obj.isActive = val!;
-                      });
-                      widget.setId(obj);
+                      widget.changeStatus(widget.id);
                     }),
                 const SizedBox(
                   width: 22,
@@ -157,7 +150,7 @@ class _TaskGridState extends State<TaskGrid> {
                 ),
                 IconButton(
                   onPressed: () {
-                    widget.setEditedTask(obj);
+                    widget.setEditedTask(widget.id, widget.title, widget.desc);
                     editTask();
                   },
                   icon: const Icon(

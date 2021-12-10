@@ -12,7 +12,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<TaskModel> data = [
+  final List<TaskModel> data = [
     TaskModel(
       id: "1",
       title: "Meeting",
@@ -45,10 +45,17 @@ class _MyHomePageState extends State<MyHomePage> {
         subTaskData: []),
   ];
 
-  void changeStatus(TaskModel obj) {
+  // void changeStatus(TaskModel obj) {
+  //   setState(() {
+  //     data[data.indexWhere((element) => element.id == obj.id)].isActive =
+  //         obj.isActive;
+  //   });
+  // }
+
+  void changeStatus(String id) {
+    final item = data.firstWhere((element) => element.id == id);
     setState(() {
-      data[data.indexWhere((element) => element.id == obj.id)].isActive =
-          obj.isActive;
+      item.toggleStatus();
     });
   }
 
@@ -58,29 +65,33 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void editDescription(TaskModel obj) {
+  void editDescription(String id, String title, String desc) {
+    final item = data.firstWhere((element) => element.id == id);
+
     setState(() {
-      data[data.indexWhere((e) => e.title == obj.title)].description =
-          obj.description;
+      item.title = title;
+      item.description = desc;
     });
   }
 
   void addTask() {
     showDialog(
       context: context,
-      builder: (context) => Container(child: AddTaskBox(
-        setaddedvalues: (i) {
-          setState(() {
-            TaskModel obj = new TaskModel(
-                isActive: i.isActive,
-                id: i.id,
-                title: i.title,
-                description: i.description,
-                subTaskData: i.subTaskData);
-            data.add(obj);
-          });
-        },
-      )),
+      builder: (context) => Container(
+        child: AddTaskBox(
+          setaddedvalues: (i) {
+            setState(() {
+              TaskModel obj = new TaskModel(
+                  isActive: i.isActive,
+                  id: i.id,
+                  title: i.title,
+                  description: i.description,
+                  subTaskData: i.subTaskData);
+              data.add(obj);
+            });
+          },
+        ),
+      ),
     );
   }
 
@@ -119,14 +130,14 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             TaskListScreen(
               emptyDisplayText: "Lets Do Something",
-              setId: changeStatus,
+              changeStatus: changeStatus,
               setDeletedTitle: deleteTask,
               setEditedTask: editDescription,
               taskDataList: data, //complete task list
             ),
             TaskListScreen(
               emptyDisplayText: "No Active Task!!",
-              setId: changeStatus,
+              changeStatus: changeStatus,
               setDeletedTitle: deleteTask,
               setEditedTask: editDescription,
               taskDataList: // contains active data list
@@ -134,7 +145,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TaskListScreen(
               emptyDisplayText: "No Task Completed Yet Hurry Up!!",
-              setId: changeStatus,
+              changeStatus: changeStatus,
               setDeletedTitle: deleteTask,
               setEditedTask: editDescription,
               taskDataList: //contains completed data list

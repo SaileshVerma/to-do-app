@@ -5,32 +5,41 @@ import '../widget/taskGrid.dart';
 
 // ignore: must_be_immutable
 class TaskListScreen extends StatefulWidget {
-  Function(TaskModel) setId;
+  Function(String) changeStatus;
   Function(String) setDeletedTitle;
-  Function(TaskModel) setEditedTask;
+  Function(String id, String title, String desc) setEditedTask;
   late List<TaskModel> taskDataList;
   late String emptyDisplayText;
-  TaskListScreen(
-      {required this.emptyDisplayText,
-      required this.setDeletedTitle,
-      required this.setEditedTask,
-      required this.setId,
-      required this.taskDataList});
+  TaskListScreen({
+    required this.emptyDisplayText,
+    required this.setDeletedTitle,
+    required this.setEditedTask,
+    required this.changeStatus,
+    required this.taskDataList,
+  });
 
   @override
   _TaskListScreenState createState() => _TaskListScreenState();
 }
 
 class _TaskListScreenState extends State<TaskListScreen> {
-  void changeStatus(TaskModel obj) {
-    setState(() {
-      widget
-          .taskDataList[
-              widget.taskDataList.indexWhere((element) => element.id == obj.id)]
-          .isActive = obj.isActive;
-      widget.setId(obj);
-    });
-  }
+  // void changeStatus(TaskModel obj) {
+  //   setState(() {
+  //     widget
+  //         .taskDataList[
+  //             widget.taskDataList.indexWhere((element) => element.id == obj.id)]
+  //         .isActive = obj.isActive;
+  //     widget.setId(obj);
+  //   });
+  // }
+
+  // void changeStatus(String id) {
+  //   final item = widget.taskDataList.firstWhere((element) => element.id == id);
+
+  //   setState(() {
+  //     item.toggleStatus();
+  //   });
+  // }
 
   void deleteTask(String title) {
     setState(() {
@@ -39,15 +48,15 @@ class _TaskListScreenState extends State<TaskListScreen> {
     });
   }
 
-  void editDescription(TaskModel obj) {
-    setState(() {
-      widget
-          .taskDataList[
-              widget.taskDataList.indexWhere((e) => e.title == obj.title)]
-          .description = obj.description;
-      widget.setEditedTask(obj);
-    });
-  }
+  // void editDescription(TaskModel obj) {
+  //   setState(() {
+  //     widget
+  //         .taskDataList[
+  //             widget.taskDataList.indexWhere((e) => e.title == obj.title)]
+  //         .description = obj.description;
+  //     widget.setEditedTask(obj);
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -73,9 +82,9 @@ class _TaskListScreenState extends State<TaskListScreen> {
                         //     widget.activeData[i].subTaskData.add(val);
                         //   });
                         // },
-                        setId: changeStatus,
+                        changeStatus: widget.changeStatus,
                         setDeletedTitle: deleteTask,
-                        setEditedTask: editDescription,
+                        setEditedTask: widget.setEditedTask,
                         id: widget.taskDataList[i].id,
                         isAcitve: widget.taskDataList[i].isActive,
                         title: widget.taskDataList[i].title,

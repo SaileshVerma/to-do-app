@@ -7,10 +7,15 @@ class TaskModel {
   bool isActive;
   List<SubTaskModel> subTaskData;
 
-  TaskModel(
-      {this.isActive = false,
-      required this.id,
-      required this.title,
-      required this.description,
-      required this.subTaskData});
+  TaskModel({
+    this.isActive = false,
+    required this.id,
+    required this.title,
+    required this.description,
+    required this.subTaskData,
+  });
+
+  toggleStatus() {
+    isActive = !isActive;
+  }
 }
