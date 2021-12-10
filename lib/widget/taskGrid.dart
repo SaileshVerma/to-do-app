@@ -55,9 +55,7 @@ class TaskGrid extends StatelessWidget {
             isActive: isAcitve,
             receviedTitle: title,
             receviedDesc: desc,
-            editDescription: (id, title, desc) {
-              editDescription(id, title, desc);
-            },
+            editDescription: editDescription,
           ),
         ),
       );

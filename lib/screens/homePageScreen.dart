@@ -74,25 +74,16 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void addTask() {
-    showDialog(
-      context: context,
-      builder: (context) => Container(
-        child: AddTaskBox(
-          setaddedvalues: (i) {
-            setState(() {
-              TaskModel obj = new TaskModel(
-                  isActive: i.isActive,
-                  id: i.id,
-                  title: i.title,
-                  description: i.description,
-                  subTaskData: i.subTaskData);
-              data.add(obj);
-            });
-          },
-        ),
-      ),
-    );
+  void addTask(String title, String desc) {
+    final item = TaskModel(
+        id: DateTime.now().toString(),
+        title: title,
+        description: desc,
+        subTaskData: []);
+
+    setState(() {
+      data.add(item);
+    });
   }
 
   @override
@@ -155,7 +146,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.blueAccent[200],
-          onPressed: addTask,
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (context) => Container(
+                child: AddTaskBox(
+                  addTask: addTask,
+                ),
+              ),
+            );
+          },
           tooltip: 'Add new note',
           child: const Icon(Icons.add),
         ),

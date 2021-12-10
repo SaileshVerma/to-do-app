@@ -22,18 +22,15 @@ class TaskDetailScreen extends StatefulWidget {
 class _TaskDetailScreenState extends State<TaskDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    void addSubTask() {
-      showDialog(
-        context: context,
-        builder: (context) => AddSubTask(
-          setaddedsubtask: (val) {
-            setState(() {
-              widget.subTaskData.add(val);
-              // widget.getAddedSubTaskvalue(val);
-            });
-          },
-        ),
+    void addSubTask(String title) {
+      final item = SubTaskModel(
+        id: DateTime.now().toString(),
+        title: title,
       );
+
+      setState(() {
+        widget.subTaskData.add(item);
+      });
     }
 
     return Scaffold(
@@ -128,7 +125,12 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueAccent[200],
-        onPressed: () => addSubTask(),
+        onPressed: () => showDialog(
+          context: context,
+          builder: (context) => AddSubTask(
+            addSubTask: addSubTask,
+          ),
+        ),
         tooltip: 'Add new note',
         child: Icon(Icons.add),
       ),

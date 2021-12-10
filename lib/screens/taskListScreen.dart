@@ -23,40 +23,12 @@ class TaskListScreen extends StatefulWidget {
 }
 
 class _TaskListScreenState extends State<TaskListScreen> {
-  // void changeStatus(TaskModel obj) {
-  //   setState(() {
-  //     widget
-  //         .taskDataList[
-  //             widget.taskDataList.indexWhere((element) => element.id == obj.id)]
-  //         .isActive = obj.isActive;
-  //     widget.setId(obj);
-  //   });
-  // }
-
-  // void changeStatus(String id) {
-  //   final item = widget.taskDataList.firstWhere((element) => element.id == id);
-
-  //   setState(() {
-  //     item.toggleStatus();
-  //   });
-  // }
-
   void deleteTask(String title) {
     setState(() {
       widget.taskDataList.removeWhere((e) => e.title == title);
       widget.setDeletedTitle(title);
     });
   }
-
-  // void editDescription(TaskModel obj) {
-  //   setState(() {
-  //     widget
-  //         .taskDataList[
-  //             widget.taskDataList.indexWhere((e) => e.title == obj.title)]
-  //         .description = obj.description;
-  //     widget.setEditedTask(obj);
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

@@ -1,19 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../models/taskmodel.dart';
-
 // ignore: must_be_immutable
 class AddTaskBox extends StatelessWidget {
-  Function(TaskModel) setaddedvalues;
-  AddTaskBox({required this.setaddedvalues});
+  Function(String title, String desc) addTask;
+  AddTaskBox({required this.addTask});
 
-  TaskModel obj = new TaskModel(
-      id: (DateTime.now()).toString(),
-      description: "",
-      title: "",
-      subTaskData: []);
-  late TextEditingController con;
-
+  String title = "";
+  String desc = "";
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -21,7 +14,7 @@ class AddTaskBox extends StatelessWidget {
       actions: [
         TextButton(
             onPressed: () {
-              setaddedvalues(obj);
+              addTask(title, desc);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),
@@ -36,13 +29,11 @@ class AddTaskBox extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              //controller: con,
-
               decoration: InputDecoration(
                 hintText: "title",
               ),
               onChanged: (val) {
-                obj.title = val;
+                title = val;
               },
             ),
             TextField(
@@ -51,7 +42,7 @@ class AddTaskBox extends StatelessWidget {
               maxLines: 6,
               decoration: InputDecoration(hintText: "description"),
               onChanged: (val) {
-                obj.description = val;
+                desc = val;
               },
             ),
           ],

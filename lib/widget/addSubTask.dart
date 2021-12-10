@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import '../models/subtaskmodel.dart';
 
 // ignore: must_be_immutable
 class AddSubTask extends StatelessWidget {
-  Function(SubTaskModel) setaddedsubtask;
-  AddSubTask({required this.setaddedsubtask});
+  Function(String title) addSubTask;
+  AddSubTask({required this.addSubTask});
 
-  SubTaskModel obj = SubTaskModel(id: DateTime.now().toString(), title: "");
+  String title = "";
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -14,7 +14,7 @@ class AddSubTask extends StatelessWidget {
       actions: [
         TextButton(
             onPressed: () {
-              setaddedsubtask(obj);
+              addSubTask(title);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),
@@ -34,7 +34,7 @@ class AddSubTask extends StatelessWidget {
                 hintText: "Task Title",
               ),
               onChanged: (val) {
-                obj.title = val;
+                title = val;
               },
             ),
           ],
