@@ -10,7 +10,7 @@ import '../widget/editTaskbox.dart';
 class TaskGrid extends StatefulWidget {
   Function(String id) changeStatus;
   Function(String) setDeletedTitle;
-  Function(String id, String title, String desc) setEditedTask;
+  Function(String id, String title, String desc) editDescription;
   //Function(SubTaskModel) getAddedSubTask;
   late String id;
   late bool isAcitve;
@@ -25,7 +25,7 @@ class TaskGrid extends StatefulWidget {
     required this.isAcitve,
     required this.subTaskData,
     required this.setDeletedTitle,
-    required this.setEditedTask,
+    required this.editDescription,
     // required this.getAddedSubTask,
   });
 
@@ -59,8 +59,8 @@ class _TaskGridState extends State<TaskGrid> {
           isActive: widget.isAcitve,
           receviedTitle: widget.title,
           receviedDesc: widget.desc,
-          setEditedvalues: (id, title, desc) {
-            widget.setEditedTask(id, title, desc);
+          editDescription: (id, title, desc) {
+            widget.editDescription(id, title, desc);
           },
         ),
       ),
@@ -150,7 +150,8 @@ class _TaskGridState extends State<TaskGrid> {
                 ),
                 IconButton(
                   onPressed: () {
-                    widget.setEditedTask(widget.id, widget.title, widget.desc);
+                    widget.editDescription(
+                        widget.id, widget.title, widget.desc);
                     editTask();
                   },
                   icon: const Icon(

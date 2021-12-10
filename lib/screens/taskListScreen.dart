@@ -7,13 +7,13 @@ import '../widget/taskGrid.dart';
 class TaskListScreen extends StatefulWidget {
   Function(String) changeStatus;
   Function(String) setDeletedTitle;
-  Function(String id, String title, String desc) setEditedTask;
+  Function(String id, String title, String desc) editDescription;
   late List<TaskModel> taskDataList;
   late String emptyDisplayText;
   TaskListScreen({
     required this.emptyDisplayText,
     required this.setDeletedTitle,
-    required this.setEditedTask,
+    required this.editDescription,
     required this.changeStatus,
     required this.taskDataList,
   });
@@ -84,7 +84,7 @@ class _TaskListScreenState extends State<TaskListScreen> {
                         // },
                         changeStatus: widget.changeStatus,
                         setDeletedTitle: deleteTask,
-                        setEditedTask: widget.setEditedTask,
+                        editDescription: widget.editDescription,
                         id: widget.taskDataList[i].id,
                         isAcitve: widget.taskDataList[i].isActive,
                         title: widget.taskDataList[i].title,

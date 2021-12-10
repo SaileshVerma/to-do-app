@@ -5,14 +5,14 @@ import '../models/taskmodel.dart';
 
 // ignore: must_be_immutable
 class EditTaskBox extends StatefulWidget {
-  Function(String id, String title, String desc) setEditedvalues;
+  Function(String id, String title, String desc) editDescription;
 
   late String receviedTitle, receviedDesc, receivedId;
   late bool isActive;
   late List<SubTaskModel> datalist;
 
   EditTaskBox(
-      {required this.setEditedvalues,
+      {required this.editDescription,
       required this.datalist,
       required this.isActive,
       required this.receivedId,
@@ -48,7 +48,7 @@ class _EditTaskBoxState extends State<EditTaskBox> {
       actions: [
         TextButton(
             onPressed: () {
-              widget.setEditedvalues(obj.id, obj.title, obj.description);
+              widget.editDescription(obj.id, obj.title, obj.description);
 
               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   duration: Duration(seconds: 1),

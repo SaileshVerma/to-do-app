@@ -132,14 +132,14 @@ class _MyHomePageState extends State<MyHomePage> {
               emptyDisplayText: "Lets Do Something",
               changeStatus: changeStatus,
               setDeletedTitle: deleteTask,
-              setEditedTask: editDescription,
+              editDescription: editDescription,
               taskDataList: data, //complete task list
             ),
             TaskListScreen(
               emptyDisplayText: "No Active Task!!",
               changeStatus: changeStatus,
               setDeletedTitle: deleteTask,
-              setEditedTask: editDescription,
+              editDescription: editDescription,
               taskDataList: // contains active data list
                   data.where((element) => element.isActive == false).toList(),
             ),
@@ -147,7 +147,7 @@ class _MyHomePageState extends State<MyHomePage> {
               emptyDisplayText: "No Task Completed Yet Hurry Up!!",
               changeStatus: changeStatus,
               setDeletedTitle: deleteTask,
-              setEditedTask: editDescription,
+              editDescription: editDescription,
               taskDataList: //contains completed data list
                   data.where((element) => element.isActive == true).toList(),
             )
