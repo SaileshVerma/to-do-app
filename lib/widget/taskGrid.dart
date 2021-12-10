@@ -98,30 +98,25 @@ class TaskGrid extends StatelessWidget {
                     onChanged: (val) {
                       changeStatus(id);
                     }),
-                const SizedBox(
-                  width: 22,
-                ),
+                const SizedBox(width: 22),
                 IconButton(
                   onPressed: () {
                     deleteTask(id);
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
                         duration: Duration(seconds: 1),
-                        content: const Text("task deleted successfully")));
+                        content: const Text("task deleted successfully"),
+                      ),
+                    );
                   },
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.delete, color: Colors.white),
                 ),
                 IconButton(
                   onPressed: () {
                     editDescription(id, title, desc);
                     editTask();
                   },
-                  icon: const Icon(
-                    Icons.edit,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.edit, color: Colors.white),
                 ),
               ],
             )

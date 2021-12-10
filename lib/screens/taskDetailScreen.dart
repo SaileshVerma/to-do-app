@@ -102,10 +102,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                         ),
                       ),
                     ),
-                    Divider(
-                      height: 6,
-                      thickness: 1,
-                    ),
+                    Divider(height: 6, thickness: 1),
                   ],
                 ),
                 onReorder: (oldindex, newindex) {

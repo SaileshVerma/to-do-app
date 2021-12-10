@@ -24,10 +24,11 @@ class EditTaskBox extends StatefulWidget {
 
 class _EditTaskBoxState extends State<EditTaskBox> {
   TaskModel obj = TaskModel(
-      id: (DateTime.now()).toString(),
-      description: "",
-      title: "",
-      subTaskData: []);
+    id: (DateTime.now()).toString(),
+    description: "",
+    title: "",
+    subTaskData: [],
+  );
 
   late TextEditingController descController, titleController;
 
@@ -55,9 +56,12 @@ class _EditTaskBoxState extends State<EditTaskBox> {
                 obj.description,
               );
 
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
                   duration: Duration(seconds: 1),
-                  content: Text("task edited successfully")));
+                  content: Text("task edited successfully"),
+                ),
+              );
               Navigator.pop(context);
             },
             child: Text("OK"))
@@ -75,15 +79,16 @@ class _EditTaskBoxState extends State<EditTaskBox> {
               ),
             ),
             TextField(
-                controller: descController,
-                keyboardType: TextInputType.multiline,
-                minLines: 1,
-                maxLines: 6,
-                decoration: InputDecoration(hintText: "description"),
-                onChanged: (_) {
-                  obj.description = descController.text;
-                  obj.title = titleController.text;
-                }),
+              controller: descController,
+              keyboardType: TextInputType.multiline,
+              minLines: 1,
+              maxLines: 6,
+              decoration: InputDecoration(hintText: "description"),
+              onChanged: (_) {
+                obj.description = descController.text;
+                obj.title = titleController.text;
+              },
+            ),
           ],
         ),
       ),

@@ -76,10 +76,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void addTask(String title, String desc) {
     final item = TaskModel(
-        id: DateTime.now().toString(),
-        title: title,
-        description: desc,
-        subTaskData: []);
+      id: DateTime.now().toString(),
+      title: title,
+      description: desc,
+      subTaskData: [],
+    );
 
     setState(() {
       data.add(item);
@@ -141,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
               editDescription: editDescription,
               taskDataList: //contains completed data list
                   data.where((element) => element.isActive == true).toList(),
-            )
+            ),
           ],
         ),
         floatingActionButton: FloatingActionButton(

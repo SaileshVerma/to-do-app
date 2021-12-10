@@ -16,9 +16,12 @@ class AddTaskBox extends StatelessWidget {
             onPressed: () {
               addTask(title, desc);
 
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
                   duration: Duration(seconds: 1),
-                  content: const Text("task added successfully")));
+                  content: const Text("task added successfully"),
+                ),
+              );
               Navigator.pop(context);
             },
             child: const Text("OK"))
@@ -29,9 +32,7 @@ class AddTaskBox extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              decoration: InputDecoration(
-                hintText: "title",
-              ),
+              decoration: InputDecoration(hintText: "title"),
               onChanged: (val) {
                 title = val;
               },
