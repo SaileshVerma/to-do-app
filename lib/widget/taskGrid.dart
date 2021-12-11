@@ -3,7 +3,7 @@ import '../models/subtaskmodel.dart';
 
 import '../screens/taskDetailScreen.dart';
 
-import '../widget/editTaskbox.dart';
+import 'addEditTaskbox.dart';
 
 // ignore: must_be_immutable
 class TaskGrid extends StatelessWidget {
@@ -30,22 +30,6 @@ class TaskGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    void editTask() {
-      showDialog(
-        context: context,
-        builder: (context) => Container(
-          child: EditTaskBox(
-            receivedId: id,
-            datalist: subTaskData,
-            isActive: isAcitve,
-            receviedTitle: title,
-            receviedDesc: desc,
-            editDescription: editDescription,
-          ),
-        ),
-      );
-    }
-
     return InkWell(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
           // navigating to task's subtask screen
@@ -113,8 +97,18 @@ class TaskGrid extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {
-                    editDescription(id, title, desc);
-                    editTask();
+                    showDialog(
+                      context: context,
+                      builder: (context) => Container(
+                        child: AddEditTaskBox(
+                          receivedTitle: title,
+                          receivedDesc: desc,
+                          addeditDescription: (title, desc) {
+                            editDescription(id, title, desc);
+                          },
+                        ),
+                      ),
+                    );
                   },
                   icon: const Icon(Icons.edit, color: Colors.white),
                 ),

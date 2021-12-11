@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:todo/widget/addEditTaskbox.dart';
 
 import '../models/subtaskmodel.dart';
 import '../models/taskmodel.dart';
-import '../widget/addTaskbox.dart';
 
 import '../screens/taskListScreen.dart';
 
@@ -65,7 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void editDescription(String id, String title, String desc) {
+  void editTask(String id, String title, String desc) {
     final item = data.firstWhere((element) => element.id == id);
 
     setState(() {
@@ -75,6 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void addTask(String title, String desc) {
+    print("add was called >>>>>>>>>>>>>>>>>>>");
     final item = TaskModel(
       id: DateTime.now().toString(),
       title: title,
@@ -124,14 +125,14 @@ class _MyHomePageState extends State<MyHomePage> {
               emptyDisplayText: "Lets Do Something",
               changeStatus: changeStatus,
               deleteTask: deleteTask,
-              editDescription: editDescription,
+              editDescription: editTask,
               taskDataList: data, //complete task list
             ),
             TaskListScreen(
               emptyDisplayText: "No Active Task!!",
               changeStatus: changeStatus,
               deleteTask: deleteTask,
-              editDescription: editDescription,
+              editDescription: editTask,
               taskDataList: // contains active data list
                   data.where((element) => element.isActive == false).toList(),
             ),
@@ -139,7 +140,7 @@ class _MyHomePageState extends State<MyHomePage> {
               emptyDisplayText: "No Task Completed Yet Hurry Up!!",
               changeStatus: changeStatus,
               deleteTask: deleteTask,
-              editDescription: editDescription,
+              editDescription: editTask,
               taskDataList: //contains completed data list
                   data.where((element) => element.isActive == true).toList(),
             ),
@@ -151,8 +152,10 @@ class _MyHomePageState extends State<MyHomePage> {
             showDialog(
               context: context,
               builder: (context) => Container(
-                child: AddTaskBox(
-                  addTask: addTask,
+                child: AddEditTaskBox(
+                  addeditDescription: (title, desc) {
+                    addTask(title, desc);
+                  },
                 ),
               ),
             );
