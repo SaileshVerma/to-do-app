@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class EmptyScreenText extends StatelessWidget {
-  String msg;
+  final String msg;
   EmptyScreenText(this.msg);
 
   @override
@@ -13,9 +12,10 @@ class EmptyScreenText extends StatelessWidget {
           msg,
           textAlign: TextAlign.center,
           style: TextStyle(
-              fontSize: 22,
-              color: Colors.grey[500],
-              fontWeight: FontWeight.bold),
+            fontSize: 22,
+            color: Colors.grey[500],
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );

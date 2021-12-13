@@ -8,4 +8,8 @@ class SubTaskModel {
     required this.title,
     this.iscompleted = false,
   });
+
+  toggleSubStatus() {
+    iscompleted = !iscompleted;
+  }
 }

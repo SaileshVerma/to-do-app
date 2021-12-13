@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:todo/helperFunctions/hideText.dart';
 import '../models/subtaskmodel.dart';
 
 import '../screens/taskDetailScreen.dart';
 
 import 'addEditTaskbox.dart';
 
-// ignore: must_be_immutable
 class TaskGrid extends StatelessWidget {
-  Function(String id) changeStatus;
-  Function(String id) deleteTask;
-  Function(String id, String title, String desc) editDescription;
+  final void Function(String id) changeStatus;
+  final void Function(String id) deleteTask;
+  final void Function(String id, String title, String desc) editDescription;
+  final void Function(String itemid, String title) addSubTask;
+  final void Function(String subitemId, String itemid) deleteSubTask;
+  final void Function(String subitemId, String itemId) changeSubStatus;
   //Function(SubTaskModel) getAddedSubTask;
-  late String id;
-  late bool isAcitve;
-  late String title;
-  late String desc;
-  late List<SubTaskModel> subTaskData;
+  final String id;
+  final bool isAcitve;
+  final String title;
+  final String desc;
+  final List<SubTaskModel> subTaskData;
   TaskGrid({
     required this.changeStatus,
     required this.title,
@@ -25,24 +28,38 @@ class TaskGrid extends StatelessWidget {
     required this.subTaskData,
     required this.deleteTask,
     required this.editDescription,
+    required this.addSubTask,
+    required this.changeSubStatus,
+    required this.deleteSubTask,
     // required this.getAddedSubTask,
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(
           // navigating to task's subtask screen
           builder: (ctx) => TaskDetailScreen(
-              subTaskData: subTaskData, title: title, desc: desc))),
+            id: id,
+            addSubTask: addSubTask,
+            changeSubStatus: changeSubStatus,
+            deleteSubTask: deleteSubTask,
+            subTaskData: subTaskData,
+            title: title,
+            desc: desc,
+          ),
+        ),
+      ),
       child: Container(
         decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [isAcitve ? Colors.grey : Colors.blue, Colors.blueGrey],
-            ),
-            borderRadius: BorderRadius.circular(10)),
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [isAcitve ? Colors.grey : Colors.blue, Colors.blueGrey],
+          ),
+          borderRadius: BorderRadius.circular(10),
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -50,23 +67,24 @@ class TaskGrid extends StatelessWidget {
             Text(
               title,
               style: TextStyle(
-                  decoration: isAcitve
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16),
+                decoration:
+                    isAcitve ? TextDecoration.lineThrough : TextDecoration.none,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
                 desc.length > 35 ? hidetext(desc) + "........" : desc,
                 style: TextStyle(
-                    decoration: isAcitve
-                        ? TextDecoration.lineThrough
-                        : TextDecoration.none,
-                    color: Colors.white,
-                    fontSize: 12),
+                  decoration: isAcitve
+                      ? TextDecoration.lineThrough
+                      : TextDecoration.none,
+                  color: Colors.white,
+                  fontSize: 12,
+                ),
               ),
             ),
             const SizedBox(height: 20),
@@ -74,14 +92,16 @@ class TaskGrid extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Checkbox(
-                    checkColor: Colors.grey,
-                    activeColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5)),
-                    value: isAcitve,
-                    onChanged: (val) {
-                      changeStatus(id);
-                    }),
+                  checkColor: Colors.grey,
+                  activeColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  value: isAcitve,
+                  onChanged: (val) {
+                    changeStatus(id);
+                  },
+                ),
                 const SizedBox(width: 22),
                 IconButton(
                   onPressed: () {
@@ -122,10 +142,3 @@ class TaskGrid extends StatelessWidget {
 }
 
 // function to hide extra text in the grid
-String hidetext(String msg) {
-  String temp = "";
-  for (int i = 0; i < 35; i++) {
-    temp = temp + msg[i];
-  }
-  return temp;
-}

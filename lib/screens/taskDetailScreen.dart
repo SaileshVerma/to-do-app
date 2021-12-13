@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 import '../models/subtaskmodel.dart';
 import '../widget/addSubTask.dart';
 
-// ignore: must_be_immutable
 class TaskDetailScreen extends StatefulWidget {
-  late String title;
-  late String desc;
-  List<SubTaskModel> subTaskData;
-  //Function(SubTaskModel) getAddedSubTaskvalue;
-
-  TaskDetailScreen(
-      {required this.subTaskData,
-      //  required this.getAddedSubTaskvalue,
-      required this.title,
-      required this.desc});
+  final String id;
+  final String title;
+  final String desc;
+  final List<SubTaskModel> subTaskData;
+  final void Function(String itemId, String title) addSubTask;
+  final void Function(String subitemId, String itemid) deleteSubTask;
+  final void Function(String subitemId, String itemId) changeSubStatus;
+  TaskDetailScreen({
+    required this.subTaskData,
+    required this.addSubTask,
+    required this.deleteSubTask,
+    required this.changeSubStatus,
+    required this.title,
+    required this.desc,
+    required this.id,
+  });
 
   @override
   _TaskDetailScreenState createState() => _TaskDetailScreenState();
@@ -22,17 +27,6 @@ class TaskDetailScreen extends StatefulWidget {
 class _TaskDetailScreenState extends State<TaskDetailScreen> {
   @override
   Widget build(BuildContext context) {
-    void addSubTask(String title) {
-      final item = SubTaskModel(
-        id: DateTime.now().toString(),
-        title: title,
-      );
-
-      setState(() {
-        widget.subTaskData.add(item);
-      });
-    }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent[200],
@@ -64,40 +58,43 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               child: ReorderableListView.builder(
                 itemCount: widget.subTaskData.length,
                 itemBuilder: (ctx, i) => Column(
-                  key: Key(i.toString()),
+                  key: Key(
+                    i.toString(),
+                  ),
                   children: [
                     ListTile(
                       title: Text(
                         widget.subTaskData[i].title,
                         style: TextStyle(
-                            decoration: widget.subTaskData[i].iscompleted
-                                ? TextDecoration.lineThrough
-                                : TextDecoration.none),
+                          decoration: widget.subTaskData[i].iscompleted
+                              ? TextDecoration.lineThrough
+                              : TextDecoration.none,
+                        ),
                       ),
                       trailing: IconButton(
-                        color: widget.subTaskData[i].iscompleted
-                            ? Colors.grey
-                            : Colors.blueAccent[200],
-                        icon: Icon(Icons.delete),
-                        onPressed: () {
-                          setState(() {
-                            widget.subTaskData.removeWhere((element) =>
-                                element.id == widget.subTaskData[i].id);
-                          });
-                        },
-                      ),
+                          color: widget.subTaskData[i].iscompleted
+                              ? Colors.grey
+                              : Colors.blueAccent[200],
+                          icon: Icon(Icons.delete),
+                          onPressed: () {
+                            widget.deleteSubTask(
+                                widget.subTaskData[i].id, widget.id);
+                          }),
                       leading: Theme(
                         data: ThemeData(
-                            unselectedWidgetColor: Colors.blueAccent[200]),
+                          unselectedWidgetColor: Colors.blueAccent[200],
+                        ),
                         child: Checkbox(
                           activeColor: Colors.grey,
                           value: widget.subTaskData[i].iscompleted,
                           shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5)),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
                           onChanged: (val) {
-                            setState(() {
-                              widget.subTaskData[i].iscompleted = val!;
-                            });
+                            widget.changeSubStatus(
+                              widget.subTaskData[i].id,
+                              widget.id,
+                            );
                           },
                         ),
                       ),
@@ -125,7 +122,8 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
         onPressed: () => showDialog(
           context: context,
           builder: (context) => AddSubTask(
-            addSubTask: addSubTask,
+            itemId: widget.id,
+            addSubTask: widget.addSubTask,
           ),
         ),
         tooltip: 'Add new note',

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class AddEditTaskBox extends StatelessWidget {
-  Function(String title, String desc) addeditDescription;
+  void Function(String title, String desc) addeditDescription;
 
   final TextEditingController titleInputController;
   final TextEditingController descriptionInputController;
@@ -10,12 +10,6 @@ class AddEditTaskBox extends StatelessWidget {
     required this.addeditDescription,
     receivedTitle = "",
     receivedDesc = "",
-
-    // required this.datalist,
-    // required this.isActive,
-    // required this.receivedId,
-    // required this.receviedTitle,
-    // required this.receviedDesc
   })  : descriptionInputController = TextEditingController(text: receivedDesc),
         titleInputController = TextEditingController(text: receivedTitle);
 
@@ -25,21 +19,22 @@ class AddEditTaskBox extends StatelessWidget {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       actions: [
         TextButton(
-            onPressed: () {
-              addeditDescription(
-                titleInputController.text,
-                descriptionInputController.text,
-              );
+          onPressed: () {
+            addeditDescription(
+              titleInputController.text,
+              descriptionInputController.text,
+            );
 
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  duration: Duration(seconds: 1),
-                  content: Text("task edited successfully"),
-                ),
-              );
-              Navigator.pop(context);
-            },
-            child: Text("OK"))
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                duration: Duration(seconds: 1),
+                content: Text("task edited successfully"),
+              ),
+            );
+            Navigator.pop(context);
+          },
+          child: Text("OK"),
+        )
       ],
       title: Text("Lets Edit : ) "),
       content: Container(
@@ -57,7 +52,9 @@ class AddEditTaskBox extends StatelessWidget {
               keyboardType: TextInputType.multiline,
               minLines: 1,
               maxLines: 6,
-              decoration: InputDecoration(hintText: "description"),
+              decoration: InputDecoration(
+                hintText: "description",
+              ),
             ),
           ],
         ),

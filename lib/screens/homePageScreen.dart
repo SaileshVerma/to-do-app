@@ -18,39 +18,50 @@ class _MyHomePageState extends State<MyHomePage> {
       title: "Meeting",
       description: "attend a meeting at 3 PM todayMtend a meeting at 3 PM",
       subTaskData: [
-        SubTaskModel(id: "1", title: "meeting 1"),
-        SubTaskModel(id: "2", title: "meeting 2"),
-        SubTaskModel(id: "3", title: "meeting 3"),
-        SubTaskModel(id: "4", title: "meeting 4"),
-        SubTaskModel(id: "5", title: "meeting 5"),
+        SubTaskModel(
+          id: "1",
+          title: "meeting 1",
+        ),
+        SubTaskModel(
+          id: "2",
+          title: "meeting 2",
+        ),
+        SubTaskModel(
+          id: "3",
+          title: "meeting 3",
+        ),
+        SubTaskModel(
+          id: "4",
+          title: "meeting 4",
+        ),
+        SubTaskModel(
+          id: "5",
+          title: "meeting 5",
+        ),
       ],
     ),
     TaskModel(
-        isActive: false,
-        id: "2",
-        title: "Assignment",
-        description: "complete all the pending assignment of lab practical",
-        subTaskData: []),
+      isActive: false,
+      id: "2",
+      title: "Assignment",
+      description: "complete all the pending assignment of lab practical",
+      subTaskData: [],
+    ),
     TaskModel(
-        isActive: false,
-        id: "3",
-        title: "Maths Assignment",
-        description: "submit the maths assignemnt to your teacher",
-        subTaskData: []),
+      isActive: false,
+      id: "3",
+      title: "Maths Assignment",
+      description: "submit the maths assignemnt to your teacher",
+      subTaskData: [],
+    ),
     TaskModel(
-        isActive: false,
-        id: "4",
-        title: "Call ur friend",
-        description: "tell ur friend about the work assign by the teacher",
-        subTaskData: []),
+      isActive: false,
+      id: "4",
+      title: "Call ur friend",
+      description: "tell ur friend about the work assign by the teacher",
+      subTaskData: [],
+    ),
   ];
-
-  // void changeStatus(TaskModel obj) {
-  //   setState(() {
-  //     data[data.indexWhere((element) => element.id == obj.id)].isActive =
-  //         obj.isActive;
-  //   });
-  // }
 
   void changeStatus(String id) {
     final item = data.firstWhere((element) => element.id == id);
@@ -75,7 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void addTask(String title, String desc) {
-    print("add was called >>>>>>>>>>>>>>>>>>>");
     final item = TaskModel(
       id: DateTime.now().toString(),
       title: title,
@@ -85,6 +95,40 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       data.add(item);
+    });
+  }
+
+  void addSubTask(String itemId, String title) {
+    print("run hua re  " + ">>>>>>>>>>>>>>>>>>>>>>>>>." + title);
+    final subItem = SubTaskModel(
+      id: DateTime.now().toString(),
+      title: title,
+    );
+    final item = data.firstWhere(
+      (element) => element.id == itemId,
+    );
+
+    setState(() {
+      item.subTaskData.add(subItem);
+    });
+  }
+
+  void deleteSubTask(String subitemId, String itemId) {
+    final item = data.firstWhere((element) => element.id == itemId);
+
+    setState(() {
+      item.subTaskData.removeWhere((e) => e.id == subitemId);
+    });
+  }
+
+  void changeSubStatus(String subitemId, String itemId) {
+    final item = data.firstWhere((element) => element.id == itemId);
+
+    final subItem =
+        item.subTaskData.firstWhere((element) => element.id == subitemId);
+
+    setState(() {
+      subItem.toggleSubStatus();
     });
   }
 
@@ -101,27 +145,48 @@ class _MyHomePageState extends State<MyHomePage> {
             unselectedLabelColor: Colors.white70,
             indicator: BoxDecoration(
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10), topRight: Radius.circular(10)),
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+              ),
               color: Colors.white,
             ),
             indicatorColor: Colors.white,
             tabs: [
-              Tab(child: const Text("ALL", style: TextStyle(fontSize: 15))),
-              Tab(child: const Text("ACTIVE", style: TextStyle(fontSize: 15))),
               Tab(
-                  child:
-                      const Text("COMPLETED", style: TextStyle(fontSize: 15)))
+                child: const Text(
+                  "ALL",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+              Tab(
+                child: const Text(
+                  "ACTIVE",
+                  style: TextStyle(fontSize: 15),
+                ),
+              ),
+              Tab(
+                child: const Text(
+                  "COMPLETED",
+                  style: TextStyle(fontSize: 15),
+                ),
+              )
             ],
           ),
           backgroundColor: Colors.blueAccent[200],
           title: const Text(
             "To-Do",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 22,
+            ),
           ),
         ),
         body: TabBarView(
           children: [
             TaskListScreen(
+              addSubTask: addSubTask,
+              changeSubStatus: changeSubStatus,
+              deleteSubTask: deleteSubTask,
               emptyDisplayText: "Lets Do Something",
               changeStatus: changeStatus,
               deleteTask: deleteTask,
@@ -129,6 +194,9 @@ class _MyHomePageState extends State<MyHomePage> {
               taskDataList: data, //complete task list
             ),
             TaskListScreen(
+              addSubTask: addSubTask,
+              changeSubStatus: changeSubStatus,
+              deleteSubTask: deleteSubTask,
               emptyDisplayText: "No Active Task!!",
               changeStatus: changeStatus,
               deleteTask: deleteTask,
@@ -137,6 +205,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   data.where((element) => element.isActive == false).toList(),
             ),
             TaskListScreen(
+              addSubTask: addSubTask,
+              changeSubStatus: changeSubStatus,
+              deleteSubTask: deleteSubTask,
               emptyDisplayText: "No Task Completed Yet Hurry Up!!",
               changeStatus: changeStatus,
               deleteTask: deleteTask,
@@ -153,9 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
               context: context,
               builder: (context) => Container(
                 child: AddEditTaskBox(
-                  addeditDescription: (title, desc) {
-                    addTask(title, desc);
-                  },
+                  addeditDescription: addTask,
                 ),
               ),
             );

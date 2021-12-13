@@ -3,18 +3,24 @@ import '../models/taskmodel.dart';
 import '../widget/emptyScreenText.dart';
 import '../widget/taskGrid.dart';
 
-// ignore: must_be_immutable
 class TaskListScreen extends StatelessWidget {
-  Function(String id) changeStatus;
-  Function(String id) deleteTask;
-  Function(String id, String title, String desc) editDescription;
-  late List<TaskModel> taskDataList;
-  late String emptyDisplayText;
+  final void Function(String id) changeStatus;
+  final void Function(String id) deleteTask;
+  final void Function(String id, String title, String desc) editDescription;
+  final void Function(String itemid, String title) addSubTask;
+  final void Function(String subitemId, String itemid) deleteSubTask;
+  final void Function(String subitemId, String itemId) changeSubStatus;
+
+  final List<TaskModel> taskDataList;
+  final String emptyDisplayText;
   TaskListScreen({
     required this.emptyDisplayText,
     required this.deleteTask,
     required this.editDescription,
     required this.changeStatus,
+    required this.addSubTask,
+    required this.changeSubStatus,
+    required this.deleteSubTask,
     required this.taskDataList,
   });
 
@@ -37,11 +43,9 @@ class TaskListScreen extends StatelessWidget {
                         mainAxisSpacing: 11,
                       ),
                       itemBuilder: (ctx, i) => TaskGrid(
-                        // getAddedSubTask: (val) {
-                        //   setState(() {
-                        //     widget.activeData[i].subTaskData.add(val);
-                        //   });
-                        // },
+                        addSubTask: addSubTask,
+                        changeSubStatus: changeSubStatus,
+                        deleteSubTask: deleteSubTask,
                         changeStatus: changeStatus,
                         deleteTask: deleteTask,
                         editDescription: editDescription,
