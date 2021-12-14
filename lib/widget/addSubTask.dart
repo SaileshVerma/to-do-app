@@ -37,7 +37,6 @@ class AddSubTask extends StatelessWidget {
         child: Column(
           children: [
             TextField(
-              //controller: con,
               decoration: InputDecoration(
                 hintText: "Task Title",
               ),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
-// ignore: must_be_immutable
 class AddEditTaskBox extends StatelessWidget {
-  void Function(String title, String desc) addeditDescription;
+  final void Function(String title, String desc) addeditDescription;
 
   final TextEditingController titleInputController;
   final TextEditingController descriptionInputController;
@@ -16,7 +15,9 @@ class AddEditTaskBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12),
+      ),
       actions: [
         TextButton(
           onPressed: () {
@@ -36,7 +37,7 @@ class AddEditTaskBox extends StatelessWidget {
           child: Text("OK"),
         )
       ],
-      title: Text("Lets Edit : ) "),
+      title: Text("Lets Do Something : ) "),
       content: Container(
         height: 150,
         child: Column(

@@ -13,12 +13,13 @@ class TaskGrid extends StatelessWidget {
   final void Function(String itemid, String title) addSubTask;
   final void Function(String subitemId, String itemid) deleteSubTask;
   final void Function(String subitemId, String itemId) changeSubStatus;
-  //Function(SubTaskModel) getAddedSubTask;
+
   final String id;
   final bool isAcitve;
   final String title;
   final String desc;
   final List<SubTaskModel> subTaskData;
+
   TaskGrid({
     required this.changeStatus,
     required this.title,
@@ -31,11 +32,15 @@ class TaskGrid extends StatelessWidget {
     required this.addSubTask,
     required this.changeSubStatus,
     required this.deleteSubTask,
-    // required this.getAddedSubTask,
   });
 
   @override
   Widget build(BuildContext context) {
+    print("run hua re   taskgrid " +
+        ">>>>>>>>>>>>>>>>>>>>>>>>>." +
+        " ---    " +
+        subTaskData.length.toString());
+
     return InkWell(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
@@ -56,7 +61,10 @@ class TaskGrid extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [isAcitve ? Colors.grey : Colors.blue, Colors.blueGrey],
+            colors: [
+              isAcitve ? Colors.grey : Colors.blue,
+              Colors.blueGrey,
+            ],
           ),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -113,7 +121,10 @@ class TaskGrid extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.delete, color: Colors.white),
+                  icon: const Icon(
+                    Icons.delete,
+                    color: Colors.white,
+                  ),
                 ),
                 IconButton(
                   onPressed: () {
@@ -130,7 +141,10 @@ class TaskGrid extends StatelessWidget {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.edit, color: Colors.white),
+                  icon: const Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             )

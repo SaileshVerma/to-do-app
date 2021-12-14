@@ -51,9 +51,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 32,
-            ),
+            SizedBox(height: 32),
             Expanded(
               child: ReorderableListView.builder(
                 itemCount: widget.subTaskData.length,
@@ -72,14 +70,17 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                         ),
                       ),
                       trailing: IconButton(
-                          color: widget.subTaskData[i].iscompleted
-                              ? Colors.grey
-                              : Colors.blueAccent[200],
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            widget.deleteSubTask(
-                                widget.subTaskData[i].id, widget.id);
-                          }),
+                        color: widget.subTaskData[i].iscompleted
+                            ? Colors.grey
+                            : Colors.blueAccent[200],
+                        icon: Icon(
+                          Icons.delete,
+                        ),
+                        onPressed: () {
+                          widget.deleteSubTask(
+                              widget.subTaskData[i].id, widget.id);
+                        },
+                      ),
                       leading: Theme(
                         data: ThemeData(
                           unselectedWidgetColor: Colors.blueAccent[200],
@@ -99,7 +100,10 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                         ),
                       ),
                     ),
-                    Divider(height: 6, thickness: 1),
+                    Divider(
+                      height: 6,
+                      thickness: 1,
+                    ),
                   ],
                 ),
                 onReorder: (oldindex, newindex) {
