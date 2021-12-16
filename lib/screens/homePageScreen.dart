@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/providers/taskProvider.dart';
 import 'package:todo/widget/addEditTaskbox.dart';
 
 import '../models/subtaskmodel.dart';
@@ -12,127 +14,129 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<TaskModel> data = [
-    TaskModel(
-      id: "1",
-      title: "Meeting",
-      description: "attend a meeting at 3 PM todayMtend a meeting at 3 PM",
-      subTaskData: [
-        SubTaskModel(
-          id: "1",
-          title: "meeting 1",
-        ),
-        SubTaskModel(
-          id: "2",
-          title: "meeting 2",
-        ),
-        SubTaskModel(
-          id: "3",
-          title: "meeting 3",
-        ),
-        SubTaskModel(
-          id: "4",
-          title: "meeting 4",
-        ),
-        SubTaskModel(
-          id: "5",
-          title: "meeting 5",
-        ),
-      ],
-    ),
-    TaskModel(
-      isActive: false,
-      id: "2",
-      title: "Assignment",
-      description: "complete all the pending assignment of lab practical",
-      subTaskData: [],
-    ),
-    TaskModel(
-      isActive: false,
-      id: "3",
-      title: "Maths Assignment",
-      description: "submit the maths assignemnt to your teacher",
-      subTaskData: [],
-    ),
-    TaskModel(
-      isActive: false,
-      id: "4",
-      title: "Call ur friend",
-      description: "tell ur friend about the work assign by the teacher",
-      subTaskData: [],
-    ),
-  ];
+  // final List<TaskModel> data = [
+  //   TaskModel(
+  //     id: "1",
+  //     title: "Meeting",
+  //     description: "attend a meeting at 3 PM todayMtend a meeting at 3 PM",
+  //     subTaskData: [
+  //       SubTaskModel(
+  //         id: "1",
+  //         title: "meeting 1",
+  //       ),
+  //       SubTaskModel(
+  //         id: "2",
+  //         title: "meeting 2",
+  //       ),
+  //       SubTaskModel(
+  //         id: "3",
+  //         title: "meeting 3",
+  //       ),
+  //       SubTaskModel(
+  //         id: "4",
+  //         title: "meeting 4",
+  //       ),
+  //       SubTaskModel(
+  //         id: "5",
+  //         title: "meeting 5",
+  //       ),
+  //     ],
+  //   ),
+  //   TaskModel(
+  //     isActive: false,
+  //     id: "2",
+  //     title: "Assignment",
+  //     description: "complete all the pending assignment of lab practical",
+  //     subTaskData: [],
+  //   ),
+  //   TaskModel(
+  //     isActive: false,
+  //     id: "3",
+  //     title: "Maths Assignment",
+  //     description: "submit the maths assignemnt to your teacher",
+  //     subTaskData: [],
+  //   ),
+  //   TaskModel(
+  //     isActive: false,
+  //     id: "4",
+  //     title: "Call ur friend",
+  //     description: "tell ur friend about the work assign by the teacher",
+  //     subTaskData: [],
+  //   ),
+  // ];
 
-  void changeStatus(String id) {
-    final item = data.firstWhere((element) => element.id == id);
-    setState(() {
-      item.toggleStatus();
-    });
-  }
+  // void changeStatus(String id) {
+  //   final item = data.firstWhere((element) => element.id == id);
+  //   setState(() {
+  //     item.toggleStatus();
+  //   });
+  // }
 
-  void deleteTask(String id) {
-    setState(() {
-      data.removeWhere((e) => e.id == id);
-    });
-  }
+  // void deleteTask(String id) {
+  //   setState(() {
+  //     data.removeWhere((e) => e.id == id);
+  //   });
+  // }
 
-  void editTask(String id, String title, String desc) {
-    final item = data.firstWhere((element) => element.id == id);
+  // void editTask(String id, String title, String desc) {
+  //   final item = data.firstWhere((element) => element.id == id);
 
-    setState(() {
-      item.title = title;
-      item.description = desc;
-    });
-  }
+  //   setState(() {
+  //     item.title = title;
+  //     item.description = desc;
+  //   });
+  // }
 
-  void addTask(String title, String desc) {
-    final item = TaskModel(
-      id: DateTime.now().toString(),
-      title: title,
-      description: desc,
-      subTaskData: [],
-    );
+  // void addTask(String title, String desc) {
+  //   final item = TaskModel(
+  //     id: DateTime.now().toString(),
+  //     title: title,
+  //     description: desc,
+  //     subTaskData: [],
+  //   );
 
-    setState(() {
-      data.add(item);
-    });
-  }
+  //   setState(() {
+  //     data.add(item);
+  //   });
+  // }
 
-  void addSubTask(String itemId, String title) {
-    final subItem = SubTaskModel(
-      id: DateTime.now().toString(),
-      title: title,
-    );
-    final item = data.firstWhere(
-      (element) => element.id == itemId,
-    );
+  // void addSubTask(String itemId, String title) {
+  //   final subItem = SubTaskModel(
+  //     id: DateTime.now().toString(),
+  //     title: title,
+  //   );
+  //   final item = data.firstWhere(
+  //     (element) => element.id == itemId,
+  //   );
 
-    setState(() {
-      item.subTaskData.add(subItem);
-    });
-  }
+  //   setState(() {
+  //     item.subTaskData.add(subItem);
+  //   });
+  // }
 
-  void deleteSubTask(String subitemId, String itemId) {
-    final item = data.firstWhere((element) => element.id == itemId);
+  // void deleteSubTask(String subitemId, String itemId) {
+  //   final item = data.firstWhere((element) => element.id == itemId);
 
-    setState(() {
-      item.subTaskData.removeWhere((e) => e.id == subitemId);
-    });
-  }
+  //   setState(() {
+  //     item.subTaskData.removeWhere((e) => e.id == subitemId);
+  //   });
+  // }
 
-  void changeSubStatus(String subitemId, String itemId) {
-    final item = data.firstWhere((element) => element.id == itemId);
+  // void changeSubStatus(String subitemId, String itemId) {
+  //   final item = data.firstWhere((element) => element.id == itemId);
 
-    final subItem =
-        item.subTaskData.firstWhere((element) => element.id == subitemId);
+  //   final subItem =
+  //       item.subTaskData.firstWhere((element) => element.id == subitemId);
 
-    setState(() {
-      subItem.toggleSubStatus();
-    });
-  }
+  //   setState(() {
+  //     subItem.toggleSubStatus();
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final taskprovider = Provider.of<TaskProvider>(context);
+    final data = taskprovider.taskdata;
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -183,36 +187,20 @@ class _MyHomePageState extends State<MyHomePage> {
         body: TabBarView(
           children: [
             TaskListScreen(
-              addSubTask: addSubTask,
-              changeSubStatus: changeSubStatus,
-              deleteSubTask: deleteSubTask,
               emptyDisplayText: "Lets Do Something",
-              changeStatus: changeStatus,
-              deleteTask: deleteTask,
-              editDescription: editTask,
               taskDataList: data, //complete task list
             ),
             TaskListScreen(
-              addSubTask: addSubTask,
-              changeSubStatus: changeSubStatus,
-              deleteSubTask: deleteSubTask,
               emptyDisplayText: "No Active Task!!",
-              changeStatus: changeStatus,
-              deleteTask: deleteTask,
-              editDescription: editTask,
-              taskDataList: // contains active data list
-                  data.where((element) => element.isActive == false).toList(),
+              taskDataList:
+                  taskprovider.activeTaskList, // contains active data list
+              //data.where((element) => element.isActive == false).toList(),
             ),
             TaskListScreen(
-              addSubTask: addSubTask,
-              changeSubStatus: changeSubStatus,
-              deleteSubTask: deleteSubTask,
               emptyDisplayText: "No Task Completed Yet Hurry Up!!",
-              changeStatus: changeStatus,
-              deleteTask: deleteTask,
-              editDescription: editTask,
-              taskDataList: //contains completed data list
-                  data.where((element) => element.isActive == true).toList(),
+              taskDataList:
+                  taskprovider.completedTaskList, //contains completed data list
+              // data.where((element) => element.isActive == true).toList(),
             ),
           ],
         ),
@@ -223,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
               context: context,
               builder: (context) => Container(
                 child: AddEditTaskBox(
-                  addeditDescription: addTask,
+                  addeditDescription: taskprovider.addTask,
                 ),
               ),
             );

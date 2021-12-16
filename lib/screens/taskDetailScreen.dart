@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/providers/taskProvider.dart';
 import '../models/subtaskmodel.dart';
 import '../widget/addSubTask.dart';
 
 class TaskDetailScreen extends StatefulWidget {
   final String id;
-  final String title;
-  final String desc;
-  final List<SubTaskModel> subTaskData;
-  final void Function(String itemId, String title) addSubTask;
-  final void Function(String subitemId, String itemid) deleteSubTask;
-  final void Function(String subitemId, String itemId) changeSubStatus;
+  // final String title;
+  // final String desc;
+  // final List<SubTaskModel> subTaskData;
+  // final void Function(String itemId, String title) addSubTask;
+  // final void Function(String subitemId, String itemid) deleteSubTask;
+  // final void Function(String subitemId, String itemId) changeSubStatus;
   TaskDetailScreen({
-    required this.subTaskData,
-    required this.addSubTask,
-    required this.deleteSubTask,
-    required this.changeSubStatus,
-    required this.title,
-    required this.desc,
+    //required this.subTaskData,
+    // required this.addSubTask,
+    // required this.deleteSubTask,
+    // required this.changeSubStatus,
+    // required this.title,
+    // required this.desc,
     required this.id,
   });
 
@@ -27,11 +29,15 @@ class TaskDetailScreen extends StatefulWidget {
 class _TaskDetailScreenState extends State<TaskDetailScreen> {
   @override
   Widget build(BuildContext context) {
+    final taskprovider = Provider.of<TaskProvider>(context);
+    final item =
+        taskprovider.taskdata.firstWhere((element) => element.id == widget.id);
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent[200],
         title: Text(
-          widget.title,
+          item.title,
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 22,
@@ -44,7 +50,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           children: [
             Container(
               child: Text(
-                widget.desc,
+                item.description,
                 textAlign: TextAlign.justify,
                 style: TextStyle(
                   fontSize: 14,
@@ -54,7 +60,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
             SizedBox(height: 32),
             Expanded(
               child: ReorderableListView.builder(
-                itemCount: widget.subTaskData.length,
+                itemCount: item.subTaskData.length,
                 itemBuilder: (ctx, i) => Column(
                   key: Key(
                     i.toString(),
@@ -62,23 +68,26 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   children: [
                     ListTile(
                       title: Text(
-                        widget.subTaskData[i].title,
+                        item.subTaskData[i].title,
                         style: TextStyle(
-                          decoration: widget.subTaskData[i].iscompleted
+                          decoration: item.subTaskData[i].iscompleted
                               ? TextDecoration.lineThrough
                               : TextDecoration.none,
                         ),
                       ),
                       trailing: IconButton(
-                        color: widget.subTaskData[i].iscompleted
+                        color: item.subTaskData[i].iscompleted
                             ? Colors.grey
                             : Colors.blueAccent[200],
                         icon: Icon(
                           Icons.delete,
                         ),
                         onPressed: () {
-                          widget.deleteSubTask(
-                              widget.subTaskData[i].id, widget.id);
+                          taskprovider.deleteSubTask(
+                              item.subTaskData[i].id, widget.id);
+
+                          // widget.deleteSubTask(
+                          //     widget.subTaskData[i].id, widget.id);
                         },
                       ),
                       leading: Theme(
@@ -87,15 +96,17 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                         ),
                         child: Checkbox(
                           activeColor: Colors.grey,
-                          value: widget.subTaskData[i].iscompleted,
+                          value: item.subTaskData[i].iscompleted,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(5),
                           ),
                           onChanged: (val) {
-                            widget.changeSubStatus(
-                              widget.subTaskData[i].id,
-                              widget.id,
-                            );
+                            taskprovider.changeSubStatus(
+                                item.subTaskData[i].id, widget.id);
+                            // widget.changeSubStatus(
+                            //   widget.subTaskData[i].id,
+                            //   widget.id,
+                            // );
                           },
                         ),
                       ),
@@ -107,14 +118,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   ],
                 ),
                 onReorder: (oldindex, newindex) {
-                  setState(() {
-                    if (oldindex < newindex) {
-                      newindex = newindex - 1;
-                    }
-
-                    final item = (widget.subTaskData).removeAt(oldindex);
-                    widget.subTaskData.insert(newindex, item);
-                  });
+                  taskprovider.reorderable(widget.id, oldindex, newindex);
                 },
               ),
             )
@@ -127,7 +131,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
           context: context,
           builder: (context) => AddSubTask(
             itemId: widget.id,
-            addSubTask: widget.addSubTask,
+            //    addSubTask: widget.addSubTask,
           ),
         ),
         tooltip: 'Add new note',

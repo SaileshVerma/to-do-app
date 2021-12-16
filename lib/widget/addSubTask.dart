@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/providers/taskProvider.dart';
 
 class AddSubTask extends StatelessWidget {
   final String itemId;
-  final void Function(String itemid, String title) addSubTask;
+  // final void Function(String itemid, String title) addSubTask;
   AddSubTask({
     required this.itemId,
-    required this.addSubTask,
+    // required this.addSubTask,
   });
 
   @override
   Widget build(BuildContext context) {
+    final taskprovider = Provider.of<TaskProvider>(context);
+
     String title = "";
     return AlertDialog(
       shape: RoundedRectangleBorder(
@@ -18,7 +22,7 @@ class AddSubTask extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            addSubTask(itemId, title);
+            taskprovider.addSubTask(itemId, title);
 
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

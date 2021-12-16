@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import 'package:todo/providers/taskProvider.dart';
 
 class AddEditTaskBox extends StatelessWidget {
   final void Function(String title, String desc) addeditDescription;
@@ -6,14 +8,15 @@ class AddEditTaskBox extends StatelessWidget {
   final TextEditingController titleInputController;
   final TextEditingController descriptionInputController;
   AddEditTaskBox({
-    required this.addeditDescription,
     receivedTitle = "",
     receivedDesc = "",
+    required this.addeditDescription,
   })  : descriptionInputController = TextEditingController(text: receivedDesc),
         titleInputController = TextEditingController(text: receivedTitle);
 
   @override
   Widget build(BuildContext context) {
+    //  final taskprovider = Provider.of<TaskProvider>(context);
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),

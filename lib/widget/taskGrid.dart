@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/helperFunctions/hideText.dart';
+import 'package:todo/providers/taskProvider.dart';
 import '../models/subtaskmodel.dart';
 
 import '../screens/taskDetailScreen.dart';
@@ -7,52 +9,50 @@ import '../screens/taskDetailScreen.dart';
 import 'addEditTaskbox.dart';
 
 class TaskGrid extends StatelessWidget {
-  final void Function(String id) changeStatus;
-  final void Function(String id) deleteTask;
-  final void Function(String id, String title, String desc) editDescription;
-  final void Function(String itemid, String title) addSubTask;
-  final void Function(String subitemId, String itemid) deleteSubTask;
-  final void Function(String subitemId, String itemId) changeSubStatus;
+  // final void Function(String id) changeStatus;
+  // final void Function(String id) deleteTask;
+  // final void Function(String id, String title, String desc) editDescription;
+  // final void Function(String itemid, String title) addSubTask;
+  // final void Function(String subitemId, String itemid) deleteSubTask;
+  // final void Function(String subitemId, String itemId) changeSubStatus;
 
   final String id;
-  final bool isAcitve;
-  final String title;
-  final String desc;
-  final List<SubTaskModel> subTaskData;
+  // final bool isAcitve;
+  // final String title;
+  // final String desc;
+  //final List<SubTaskModel> subTaskData;
 
   TaskGrid({
-    required this.changeStatus,
-    required this.title,
-    required this.desc,
+    // required this.changeStatus,
+    // required this.title,
+    // required this.desc,
     required this.id,
-    required this.isAcitve,
-    required this.subTaskData,
-    required this.deleteTask,
-    required this.editDescription,
-    required this.addSubTask,
-    required this.changeSubStatus,
-    required this.deleteSubTask,
+    // required this.isAcitve,
+    // required this.subTaskData,
+    // required this.deleteTask,
+    // required this.editDescription,
+    // required this.addSubTask,
+    // required this.changeSubStatus,
+    // required this.deleteSubTask,
   });
 
   @override
   Widget build(BuildContext context) {
-    print("run hua re   taskgrid " +
-        ">>>>>>>>>>>>>>>>>>>>>>>>>." +
-        " ---    " +
-        subTaskData.length.toString());
-
+    final taskprovider = Provider.of<TaskProvider>(context);
+    final item =
+        taskprovider.taskdata.firstWhere((element) => element.id == id);
     return InkWell(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(
           // navigating to task's subtask screen
           builder: (ctx) => TaskDetailScreen(
             id: id,
-            addSubTask: addSubTask,
-            changeSubStatus: changeSubStatus,
-            deleteSubTask: deleteSubTask,
-            subTaskData: subTaskData,
-            title: title,
-            desc: desc,
+            // addSubTask: addSubTask,
+            // changeSubStatus: changeSubStatus,
+            // deleteSubTask: deleteSubTask,
+            // subTaskData: subTaskData,
+            // title: title,
+            // desc: desc,
           ),
         ),
       ),
@@ -62,7 +62,7 @@ class TaskGrid extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              isAcitve ? Colors.grey : Colors.blue,
+              item.isActive ? Colors.grey : Colors.blue,
               Colors.blueGrey,
             ],
           ),
@@ -73,10 +73,11 @@ class TaskGrid extends StatelessWidget {
           children: [
             const SizedBox(height: 15),
             Text(
-              title,
+              item.title,
               style: TextStyle(
-                decoration:
-                    isAcitve ? TextDecoration.lineThrough : TextDecoration.none,
+                decoration: item.isActive
+                    ? TextDecoration.lineThrough
+                    : TextDecoration.none,
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
@@ -85,9 +86,11 @@ class TaskGrid extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                desc.length > 35 ? hidetext(desc) + "........" : desc,
+                item.description.length > 35
+                    ? hidetext(item.description) + "........"
+                    : item.description,
                 style: TextStyle(
-                  decoration: isAcitve
+                  decoration: item.isActive
                       ? TextDecoration.lineThrough
                       : TextDecoration.none,
                   color: Colors.white,
@@ -105,15 +108,15 @@ class TaskGrid extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(5),
                   ),
-                  value: isAcitve,
+                  value: item.isActive,
                   onChanged: (val) {
-                    changeStatus(id);
+                    taskprovider.changeStatus(id);
                   },
                 ),
                 const SizedBox(width: 22),
                 IconButton(
                   onPressed: () {
-                    deleteTask(id);
+                    taskprovider.deleteTask(id);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         duration: Duration(seconds: 1),
@@ -132,10 +135,11 @@ class TaskGrid extends StatelessWidget {
                       context: context,
                       builder: (context) => Container(
                         child: AddEditTaskBox(
-                          receivedTitle: title,
-                          receivedDesc: desc,
+                          receivedTitle: item.title,
+                          receivedDesc: item.description,
                           addeditDescription: (title, desc) {
-                            editDescription(id, title, desc);
+                            taskprovider.editTask(
+                                item.id, item.title, item.description);
                           },
                         ),
                       ),
