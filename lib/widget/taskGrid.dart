@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
 import '../helperFunctions/hideText.dart';
 import '../providers/taskProvider.dart';
 
@@ -28,103 +29,124 @@ class TaskGrid extends StatelessWidget {
           ),
         ),
       ),
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              item.isActive ? Colors.grey : Colors.blue,
-              Colors.blueGrey,
-            ],
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 15),
-            Text(
-              item.title,
-              style: TextStyle(
-                decoration: item.isActive
-                    ? TextDecoration.lineThrough
-                    : TextDecoration.none,
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 16,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                item.description.length > 35
-                    ? hidetext(item.description) + "........"
-                    : item.description,
-                style: TextStyle(
-                  decoration: item.isActive
-                      ? TextDecoration.lineThrough
-                      : TextDecoration.none,
-                  color: Colors.white,
-                  fontSize: 12,
+      child: Column(
+        children: [
+          Material(
+            borderRadius: BorderRadius.circular(10),
+            elevation: 4,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    item.isActive ? Colors.grey.shade300 : Colors.white10,
+                    Colors.blueGrey.shade50,
+                  ],
                 ),
+                borderRadius: BorderRadius.circular(10),
               ),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Checkbox(
-                  checkColor: Colors.grey,
-                  activeColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Checkbox(
+                    checkColor: Colors.white,
+                    activeColor: Colors.black26,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    value: item.isActive,
+                    onChanged: (val) {
+                      taskprovider.changeStatus(id);
+                    },
                   ),
-                  value: item.isActive,
-                  onChanged: (val) {
-                    taskprovider.changeStatus(id);
-                  },
-                ),
-                const SizedBox(width: 22),
-                IconButton(
-                  onPressed: () {
-                    taskprovider.deleteTask(id);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        duration: Duration(seconds: 1),
-                        content: const Text("task deleted successfully"),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(bottom: 30, right: 20, top: 20),
+                    child: Container(
+                      width: 180,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            item.title,
+                            style: TextStyle(
+                              decoration: item.isActive
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            item.description.length > 25
+                                ? hidetext(item.description) + "..."
+                                : item.description,
+                            style: TextStyle(
+                              decoration: item.isActive
+                                  ? TextDecoration.lineThrough
+                                  : TextDecoration.none,
+                              color: Colors.black45,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ],
                       ),
-                    );
-                  },
-                  icon: const Icon(
-                    Icons.delete,
-                    color: Colors.white,
+                    ),
                   ),
-                ),
-                IconButton(
-                  icon: const Icon(
-                    Icons.edit,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => Container(
-                        child: AddEditTaskBox(
-                          receivedTitle: item.title,
-                          receivedDesc: item.description,
-                          addeditDescription: (title, desc) {
-                            taskprovider.editTask(item.id, title, desc);
-                          },
+                  //  SizedBox(width: 30),
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () {
+                          taskprovider.deleteTask(id);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              duration: Duration(seconds: 1),
+                              content: const Text("task deleted successfully"),
+                            ),
+                          );
+                        },
+                        icon: const Icon(
+                          Icons.delete_outline,
+                          color: Colors.black38,
                         ),
                       ),
-                    );
-                  },
-                ),
-              ],
-            )
-          ],
-        ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.edit,
+                          color: Colors.black38,
+                        ),
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => Container(
+                              child: AddEditTaskBox(
+                                receivedTitle: item.title,
+                                receivedDesc: item.description,
+                                addeditDescription: (title, desc) {
+                                  taskprovider.editTask(item.id, title, desc);
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+        ],
       ),
     );
   }

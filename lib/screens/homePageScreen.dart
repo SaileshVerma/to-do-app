@@ -14,11 +14,12 @@ class MyHomePage extends StatelessWidget {
       length: 3,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blueGrey[50],
           elevation: 0,
           bottom: TabBar(
             indicatorWeight: 1,
-            labelColor: Colors.blueAccent[200],
-            unselectedLabelColor: Colors.white70,
+            labelColor: Colors.black87,
+            unselectedLabelColor: Colors.black54,
             indicator: BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(10),
@@ -31,7 +32,7 @@ class MyHomePage extends StatelessWidget {
               Tab(
                 child: const Text(
                   "ALL",
-                  style: TextStyle(fontSize: 15),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
               ),
               Tab(
@@ -48,10 +49,10 @@ class MyHomePage extends StatelessWidget {
               )
             ],
           ),
-          backgroundColor: Colors.blueAccent[200],
           title: const Text(
             "To-Do",
             style: TextStyle(
+              color: Colors.black87,
               fontWeight: FontWeight.bold,
               fontSize: 22,
             ),
@@ -76,7 +77,7 @@ class MyHomePage extends StatelessWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.blueAccent[200],
+          backgroundColor: Colors.black87,
           onPressed: () {
             showDialog(
               context: context,

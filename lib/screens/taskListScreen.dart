@@ -23,13 +23,13 @@ class TaskListScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Expanded(
-                    child: GridView.builder(
+                    child: ListView.builder(
                       itemCount: taskDataList.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 11,
-                        mainAxisSpacing: 11,
-                      ),
+                      // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //   crossAxisCount: 2,
+                      //   crossAxisSpacing: 11,
+                      //   mainAxisSpacing: 11,
+                      // ),
                       itemBuilder: (ctx, i) => TaskGrid(
                         id: taskDataList[i].id,
                       ),

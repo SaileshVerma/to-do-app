@@ -43,7 +43,8 @@ class TaskProvider with ChangeNotifier {
       isActive: false,
       id: "3",
       title: "Maths Assignment",
-      description: "submit the maths assignemnt to your teacher",
+      description:
+          "submit the maths assignemnt to your teachesscscscscsccscscscr",
       subTaskData: [],
     ),
     TaskModel(
