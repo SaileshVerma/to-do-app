@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/providers/taskProvider.dart';
+
+import '../providers/taskProvider.dart';
 
 class AddSubTask extends StatelessWidget {
   final String itemId;
-  // final void Function(String itemid, String title) addSubTask;
+
   AddSubTask({
     required this.itemId,
-    // required this.addSubTask,
   });
 
   @override

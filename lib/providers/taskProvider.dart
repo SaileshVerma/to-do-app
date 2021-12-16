@@ -62,13 +62,13 @@ class TaskProvider with ChangeNotifier {
   List<TaskModel> get activeTaskList {
     final list =
         taskdata.where((element) => element.isActive == false).toList();
-    notifyListeners();
+
     return list;
   }
 
   List<TaskModel> get completedTaskList {
     final list = taskdata.where((element) => element.isActive == true).toList();
-    notifyListeners();
+
     return list;
   }
 

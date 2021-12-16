@@ -1,37 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/providers/taskProvider.dart';
-import '../models/subtaskmodel.dart';
+import '../providers/taskProvider.dart';
+
 import '../widget/addSubTask.dart';
 
-class TaskDetailScreen extends StatefulWidget {
+class TaskDetailScreen extends StatelessWidget {
   final String id;
-  // final String title;
-  // final String desc;
-  // final List<SubTaskModel> subTaskData;
-  // final void Function(String itemId, String title) addSubTask;
-  // final void Function(String subitemId, String itemid) deleteSubTask;
-  // final void Function(String subitemId, String itemId) changeSubStatus;
+
   TaskDetailScreen({
-    //required this.subTaskData,
-    // required this.addSubTask,
-    // required this.deleteSubTask,
-    // required this.changeSubStatus,
-    // required this.title,
-    // required this.desc,
     required this.id,
   });
 
-  @override
-  _TaskDetailScreenState createState() => _TaskDetailScreenState();
-}
-
-class _TaskDetailScreenState extends State<TaskDetailScreen> {
-  @override
   Widget build(BuildContext context) {
     final taskprovider = Provider.of<TaskProvider>(context);
     final item =
-        taskprovider.taskdata.firstWhere((element) => element.id == widget.id);
+        taskprovider.taskdata.firstWhere((element) => element.id == id);
 
     return Scaffold(
       appBar: AppBar(
@@ -84,10 +67,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                         ),
                         onPressed: () {
                           taskprovider.deleteSubTask(
-                              item.subTaskData[i].id, widget.id);
-
-                          // widget.deleteSubTask(
-                          //     widget.subTaskData[i].id, widget.id);
+                              item.subTaskData[i].id, id);
                         },
                       ),
                       leading: Theme(
@@ -102,11 +82,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                           ),
                           onChanged: (val) {
                             taskprovider.changeSubStatus(
-                                item.subTaskData[i].id, widget.id);
-                            // widget.changeSubStatus(
-                            //   widget.subTaskData[i].id,
-                            //   widget.id,
-                            // );
+                                item.subTaskData[i].id, id);
                           },
                         ),
                       ),
@@ -118,7 +94,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                   ],
                 ),
                 onReorder: (oldindex, newindex) {
-                  taskprovider.reorderable(widget.id, oldindex, newindex);
+                  taskprovider.reorderable(id, oldindex, newindex);
                 },
               ),
             )
@@ -130,12 +106,13 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
         onPressed: () => showDialog(
           context: context,
           builder: (context) => AddSubTask(
-            itemId: widget.id,
-            //    addSubTask: widget.addSubTask,
+            itemId: id,
           ),
         ),
         tooltip: 'Add new note',
-        child: Icon(Icons.add),
+        child: const Icon(
+          Icons.add,
+        ),
       ),
     );
   }

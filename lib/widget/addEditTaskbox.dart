@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:todo/providers/taskProvider.dart';
 
 class AddEditTaskBox extends StatelessWidget {
   final void Function(String title, String desc) addeditDescription;
@@ -16,7 +14,6 @@ class AddEditTaskBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //  final taskprovider = Provider.of<TaskProvider>(context);
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -33,7 +30,7 @@ class AddEditTaskBox extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
                 duration: Duration(seconds: 1),
-                content: Text("task edited successfully"),
+                content: Text("task done successfully"),
               ),
             );
             Navigator.pop(context);

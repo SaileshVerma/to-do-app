@@ -1,39 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/helperFunctions/hideText.dart';
-import 'package:todo/providers/taskProvider.dart';
-import '../models/subtaskmodel.dart';
+import '../helperFunctions/hideText.dart';
+import '../providers/taskProvider.dart';
 
 import '../screens/taskDetailScreen.dart';
 
 import 'addEditTaskbox.dart';
 
 class TaskGrid extends StatelessWidget {
-  // final void Function(String id) changeStatus;
-  // final void Function(String id) deleteTask;
-  // final void Function(String id, String title, String desc) editDescription;
-  // final void Function(String itemid, String title) addSubTask;
-  // final void Function(String subitemId, String itemid) deleteSubTask;
-  // final void Function(String subitemId, String itemId) changeSubStatus;
-
   final String id;
-  // final bool isAcitve;
-  // final String title;
-  // final String desc;
-  //final List<SubTaskModel> subTaskData;
 
   TaskGrid({
-    // required this.changeStatus,
-    // required this.title,
-    // required this.desc,
     required this.id,
-    // required this.isAcitve,
-    // required this.subTaskData,
-    // required this.deleteTask,
-    // required this.editDescription,
-    // required this.addSubTask,
-    // required this.changeSubStatus,
-    // required this.deleteSubTask,
   });
 
   @override
@@ -47,12 +25,6 @@ class TaskGrid extends StatelessWidget {
           // navigating to task's subtask screen
           builder: (ctx) => TaskDetailScreen(
             id: id,
-            // addSubTask: addSubTask,
-            // changeSubStatus: changeSubStatus,
-            // deleteSubTask: deleteSubTask,
-            // subTaskData: subTaskData,
-            // title: title,
-            // desc: desc,
           ),
         ),
       ),
@@ -157,5 +129,3 @@ class TaskGrid extends StatelessWidget {
     );
   }
 }
-
-// function to hide extra text in the grid
