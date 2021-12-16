@@ -23,6 +23,7 @@ class AddEditTaskBox extends StatelessWidget {
       ),
       actions: [
         TextButton(
+          child: Text("OK"),
           onPressed: () {
             addeditDescription(
               titleInputController.text,
@@ -37,7 +38,6 @@ class AddEditTaskBox extends StatelessWidget {
             );
             Navigator.pop(context);
           },
-          child: Text("OK"),
         )
       ],
       title: Text("Lets Do Something : ) "),

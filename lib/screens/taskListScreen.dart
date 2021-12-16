@@ -28,8 +28,8 @@ class TaskListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final taskprovider = Provider.of<TaskProvider>(context);
-    final taskDataList = taskprovider.taskdata;
+    // final taskprovider = Provider.of<TaskProvider>(context);
+    // final taskDataList = taskprovider.taskdata;
     return Container(
       child: Padding(
         padding: const EdgeInsets.all(8.0),

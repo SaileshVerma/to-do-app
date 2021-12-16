@@ -130,6 +130,10 @@ class TaskGrid extends StatelessWidget {
                   ),
                 ),
                 IconButton(
+                  icon: const Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  ),
                   onPressed: () {
                     showDialog(
                       context: context,
@@ -138,17 +142,12 @@ class TaskGrid extends StatelessWidget {
                           receivedTitle: item.title,
                           receivedDesc: item.description,
                           addeditDescription: (title, desc) {
-                            taskprovider.editTask(
-                                item.id, item.title, item.description);
+                            taskprovider.editTask(item.id, title, desc);
                           },
                         ),
                       ),
                     );
                   },
-                  icon: const Icon(
-                    Icons.edit,
-                    color: Colors.white,
-                  ),
                 ),
               ],
             )
