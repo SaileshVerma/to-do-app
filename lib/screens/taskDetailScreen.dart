@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/widget/emptyScreenText.dart';
-import 'package:todo/widget/softButton.dart';
+import '../widget/emptyScreenText.dart';
+
 import '../providers/taskProvider.dart';
 
 import '../widget/addSubTask.dart';
@@ -121,15 +121,15 @@ class TaskDetailScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: SoftButton(
-        color: Colors.grey,
-        func: () => showDialog(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.black87,
+        onPressed: () => showDialog(
           context: context,
           builder: (context) => AddSubTask(
             itemId: id,
           ),
         ),
-        icon: const Icon(
+        child: const Icon(
           Icons.add,
         ),
       ),

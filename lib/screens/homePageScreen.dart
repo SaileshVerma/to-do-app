@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/widget/softButton.dart';
 
 import '../providers/taskProvider.dart';
 import '../widget/addEditTaskbox.dart';
@@ -78,9 +77,9 @@ class MyHomePage extends StatelessWidget {
             ),
           ],
         ),
-        floatingActionButton: SoftButton(
-          color: Colors.black87,
-          func: () {
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.black87,
+          onPressed: () {
             showDialog(
               context: context,
               builder: (context) => Container(
@@ -90,7 +89,7 @@ class MyHomePage extends StatelessWidget {
               ),
             );
           },
-          icon: const Icon(
+          child: const Icon(
             Icons.add,
           ),
         ),

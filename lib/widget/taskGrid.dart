@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/widget/softButton.dart';
-import 'package:todo/widget/softButtonPressed.dart';
+
+import '../widget/softButton.dart';
 
 import '../helperFunctions/hideText.dart';
 import '../providers/taskProvider.dart';
@@ -37,39 +37,6 @@ class TaskGrid extends StatelessWidget {
             elevation: 7,
             borderRadius: BorderRadius.circular(10),
             child: Container(
-              // padding: EdgeInsets.all(6),
-
-              // decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(10),
-              //     color: Colors.grey.shade300,
-              //     boxShadow: [
-              //       BoxShadow(
-              //           color: Colors.grey.shade600,
-              //           offset: Offset(4.0, 4.0),
-              //           blurRadius: 15.0,
-              //           spreadRadius: 1.0),
-              //       BoxShadow(
-              //           color: Colors.white,
-              //           offset: Offset(-4.0, -4.0),
-              //           blurRadius: 15.0,
-              //           spreadRadius: 1.0),
-              //     ],
-              //     gradient: LinearGradient(
-              //         begin: Alignment.topLeft,
-              //         end: Alignment.bottomRight,
-              //         colors: [
-              //           Colors.grey.shade200,
-              //           Colors.grey.shade300,
-              //           Colors.grey.shade400,
-              //           Colors.grey.shade500,
-              //         ],
-              //         stops: [
-              //           0.1,
-              //           0.3,
-              //           0.8,
-              //           1
-              //         ])),
-
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
@@ -96,7 +63,10 @@ class TaskGrid extends StatelessWidget {
                     },
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(bottom: 60, top: 30),
+                    padding: const EdgeInsets.only(
+                      bottom: 60,
+                      top: 30,
+                    ),
                     child: Container(
                       width: 145,
                       child: Column(
@@ -141,6 +111,7 @@ class TaskGrid extends StatelessWidget {
                           color: Colors.grey.shade300,
                           func: () {
                             taskprovider.deleteTask(id);
+
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 duration: Duration(seconds: 1),
