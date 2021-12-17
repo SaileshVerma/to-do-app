@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/widget/softButton.dart';
 
 import '../providers/taskProvider.dart';
 import '../widget/addEditTaskbox.dart';
@@ -13,8 +14,9 @@ class MyHomePage extends StatelessWidget {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.blueGrey[50],
+          backgroundColor: Colors.grey.shade300,
           elevation: 0,
           bottom: TabBar(
             indicatorWeight: 1,
@@ -76,9 +78,9 @@ class MyHomePage extends StatelessWidget {
             ),
           ],
         ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.black87,
-          onPressed: () {
+        floatingActionButton: SoftButton(
+          color: Colors.black87,
+          func: () {
             showDialog(
               context: context,
               builder: (context) => Container(
@@ -88,8 +90,7 @@ class MyHomePage extends StatelessWidget {
               ),
             );
           },
-          tooltip: 'Add new note',
-          child: const Icon(
+          icon: const Icon(
             Icons.add,
           ),
         ),

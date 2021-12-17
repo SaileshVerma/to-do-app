@@ -20,23 +20,18 @@ class TaskListScreen extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: taskDataList.isEmpty
             ? EmptyScreenText(emptyDisplayText)
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: taskDataList.length,
-                      // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      //   crossAxisCount: 2,
-                      //   crossAxisSpacing: 11,
-                      //   mainAxisSpacing: 11,
-                      // ),
-                      itemBuilder: (ctx, i) => TaskGrid(
-                        id: taskDataList[i].id,
-                      ),
-                    ),
+            : Expanded(
+                child: ListView.builder(
+                  itemCount: taskDataList.length,
+                  // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  //   crossAxisCount: 2,
+                  //   crossAxisSpacing: 11,
+                  //   mainAxisSpacing: 11,
+                  // ),
+                  itemBuilder: (ctx, i) => TaskGrid(
+                    id: taskDataList[i].id,
                   ),
-                ],
+                ),
               ),
       ),
     );

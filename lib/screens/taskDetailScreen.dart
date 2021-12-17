@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/widget/emptyScreenText.dart';
+import 'package:todo/widget/softButton.dart';
 import '../providers/taskProvider.dart';
 
 import '../widget/addSubTask.dart';
@@ -120,16 +121,15 @@ class TaskDetailScreen extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.black87,
-        onPressed: () => showDialog(
+      floatingActionButton: SoftButton(
+        color: Colors.grey,
+        func: () => showDialog(
           context: context,
           builder: (context) => AddSubTask(
             itemId: id,
           ),
         ),
-        tooltip: 'Add new note',
-        child: const Icon(
+        icon: const Icon(
           Icons.add,
         ),
       ),

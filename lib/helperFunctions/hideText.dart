@@ -1,6 +1,6 @@
 String hidetext(String msg) {
   String temp = "";
-  for (int i = 0; i < 25; i++) {
+  for (int i = 0; i < 24; i++) {
     temp = temp + msg[i];
   }
 

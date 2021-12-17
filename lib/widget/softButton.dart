@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 
 class SoftButton extends StatelessWidget {
-  final Widget child;
-  SoftButton(this.child);
+  final Icon icon;
+  final Color color;
+  final void Function() func;
+
+  SoftButton({
+    required this.icon,
+    required this.func,
+    required this.color,
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(4),
       child: Container(
-        padding: EdgeInsets.all(20),
-        child: child,
-        // IconButton(
-        //   icon: Icon(Icons.delete),
-        //   onPressed: () {},
-        //   color: Colors.grey[800],
-        // ),
+        padding: EdgeInsets.all(6),
+        child: IconButton(
+          icon: icon,
+          onPressed: func,
+        ),
         decoration: BoxDecoration(
-
-            //shape: BoxShape.circle,
-            color: Colors.grey[300],
+            shape: BoxShape.circle,
+            color: color,
             boxShadow: [
               BoxShadow(
                   color: Colors.grey.shade600,

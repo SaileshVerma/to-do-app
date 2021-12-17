@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
 class SoftButtonPressed extends StatelessWidget {
+  final Icon icon;
+  final void Function() func;
+
+  SoftButtonPressed({
+    required this.icon,
+    required this.func,
+  });
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -8,11 +15,10 @@ class SoftButtonPressed extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.all(5),
         child: Container(
-          padding: EdgeInsets.all(20),
+          padding: EdgeInsets.all(6),
           child: IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.delete),
-            color: Colors.grey[700],
+            onPressed: func,
+            icon: icon,
           ),
           decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -64,10 +70,10 @@ class SoftButtonPressed extends StatelessWidget {
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
                 colors: [
-                  Colors.grey.shade200,
-                  Colors.grey.shade300,
-                  Colors.grey.shade400,
-                  Colors.grey.shade500,
+                  Colors.white24,
+                  Colors.white30,
+                  Colors.white38,
+                  Colors.white54,
                 ],
                 stops: [
                   0.1,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/widget/softButton.dart';
+import 'package:todo/widget/softButtonPressed.dart';
 
 import '../helperFunctions/hideText.dart';
 import '../providers/taskProvider.dart';
@@ -32,15 +34,48 @@ class TaskGrid extends StatelessWidget {
       child: Column(
         children: [
           Material(
+            elevation: 7,
             borderRadius: BorderRadius.circular(10),
-            elevation: 4,
             child: Container(
+              // padding: EdgeInsets.all(6),
+
+              // decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(10),
+              //     color: Colors.grey.shade300,
+              //     boxShadow: [
+              //       BoxShadow(
+              //           color: Colors.grey.shade600,
+              //           offset: Offset(4.0, 4.0),
+              //           blurRadius: 15.0,
+              //           spreadRadius: 1.0),
+              //       BoxShadow(
+              //           color: Colors.white,
+              //           offset: Offset(-4.0, -4.0),
+              //           blurRadius: 15.0,
+              //           spreadRadius: 1.0),
+              //     ],
+              //     gradient: LinearGradient(
+              //         begin: Alignment.topLeft,
+              //         end: Alignment.bottomRight,
+              //         colors: [
+              //           Colors.grey.shade200,
+              //           Colors.grey.shade300,
+              //           Colors.grey.shade400,
+              //           Colors.grey.shade500,
+              //         ],
+              //         stops: [
+              //           0.1,
+              //           0.3,
+              //           0.8,
+              //           1
+              //         ])),
+
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    item.isActive ? Colors.grey.shade300 : Colors.white10,
+                    item.isActive ? Colors.white30 : Colors.grey.shade300,
                     Colors.blueGrey.shade50,
                   ],
                 ),
@@ -61,10 +96,9 @@ class TaskGrid extends StatelessWidget {
                     },
                   ),
                   Padding(
-                    padding:
-                        const EdgeInsets.only(bottom: 30, right: 20, top: 20),
+                    padding: const EdgeInsets.only(bottom: 60, top: 30),
                     child: Container(
-                      width: 180,
+                      width: 145,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,7 +118,7 @@ class TaskGrid extends StatelessWidget {
                             height: 10,
                           ),
                           Text(
-                            item.description.length > 25
+                            item.description.length > 24
                                 ? hidetext(item.description) + "..."
                                 : item.description,
                             style: TextStyle(
@@ -99,52 +133,57 @@ class TaskGrid extends StatelessWidget {
                       ),
                     ),
                   ),
-                  //  SizedBox(width: 30),
-                  Row(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          taskprovider.deleteTask(id);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              duration: Duration(seconds: 1),
-                              content: const Text("task deleted successfully"),
-                            ),
-                          );
-                        },
-                        icon: const Icon(
-                          Icons.delete_outline,
-                          color: Colors.black38,
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.edit,
-                          color: Colors.black38,
-                        ),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => Container(
-                              child: AddEditTaskBox(
-                                receivedTitle: item.title,
-                                receivedDesc: item.description,
-                                addeditDescription: (title, desc) {
-                                  taskprovider.editTask(item.id, title, desc);
-                                },
+                  Padding(
+                    padding: const EdgeInsets.only(top: 22.0),
+                    child: Row(
+                      children: [
+                        SoftButton(
+                          color: Colors.grey.shade300,
+                          func: () {
+                            taskprovider.deleteTask(id);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                duration: Duration(seconds: 1),
+                                content:
+                                    const Text("task deleted successfully"),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.delete_outline,
+                            color: Colors.black38,
+                          ),
+                        ),
+                        SoftButton(
+                          color: Colors.grey.shade300,
+                          icon: const Icon(
+                            Icons.edit,
+                            color: Colors.black38,
+                          ),
+                          func: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => Container(
+                                child: AddEditTaskBox(
+                                  receivedTitle: item.title,
+                                  receivedDesc: item.description,
+                                  addeditDescription: (title, desc) {
+                                    taskprovider.editTask(item.id, title, desc);
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
             ),
           ),
           SizedBox(
-            height: 10,
+            height: 20,
           ),
         ],
       ),
