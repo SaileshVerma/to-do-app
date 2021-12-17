@@ -4,6 +4,5 @@ String hidetext(String msg) {
     temp = temp + msg[i];
   }
 
-  print("ye h extra wale ki length " + temp.length.toString());
   return temp;
 }
