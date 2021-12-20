@@ -35,7 +35,6 @@ class TaskListScreen extends StatelessWidget {
       // taskDataList.removeAt(index);
       // taskprovider.deleteTask(id);
       // print("runn ?>>>>>>>>>>");
-      //
     }
 
     print("runn ?>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" +
